@@ -7,36 +7,55 @@ using namespace std;
 //Resize
   void Cronologia::resize(int r){
      if(r>reservados){
-     Fecha_Historica *aux = new Fecha_Historica[r];   
+     Fecha_Historica *aux = new Fecha_Historica[r];
      for (int i=0; i<neventos; i++)
-        aux[i]=event[i]; 
+        aux[i]=event[i];
      delete[] event;
      event = aux;
      reservados=r;
      }
   }
-  
+
 //Ordena
   void Cronologia::ordenar(){
-     for (int i=neventos-1; i>0; --i) 
+     for (int i=neventos-1; i>0; --i)
       for (int j=0; j<i; ++j)
-         if (event[j].getAnio() > event[j+1].getAnio()) {
+         if (event[j].GetAnio() > event[j+1].GetAnio()) {
             Fecha_Historica aux;
             aux = event[j];
             event[j] = event[j+1];
             event[j+1]= aux;
          }
-}
+  }
+
+  void Cronologia::LiberarMemoria(){
+    neventos=reservados=0;
+    delete[] event;
+  }
+
+  void Cronologia::ReservarMemoria(int reserv){
+    if(reserv>0){
+      reservados=reserv;
+      Fecha_Historica *event = new Fecha_Historica [reserv];
+    }
+    else
+      reservados=0;
+  }
+
+  void Cronologia::Copiar(Fecha_Historica *f, int reserv, int eventos){
+    ReservarMemoria(reserv);
+    neventos=eventos;
+    for(int i= 0; i< eventos; i++)
+      event[i]=f[i];
+  }
 
 //Constructor vacío
   Cronologia::Cronologia():reservados(0),neventos(0),event(0){}
-     
+
 
 //Constructor con parámetro cadena de Fecha_Historica y número de objetos
-  Cronologia::Cronologia(Fecha_Historica *eh, int n):reservados(n),neventos(n){
-     Fecha_Historica *event = new Fecha_Historica[n];   
-     for (int i=0; i<n; i++)
-        event[i]=eh[i];
+  Cronologia::Cronologia(Fecha_Historica *eh, int n){
+     Copiar(eh,n,n);
   }
 
 //Constructor de copias
@@ -45,13 +64,12 @@ using namespace std;
    }
 
 
-  Cronologia& Cronologia::operator=(const Cronologia& c)
-  {
-    event = new Fecha_Historica[c.reservados];
-    neventos = c.neventos;
-    reservados = c.reservados;
-    for(int i=0; i<neventos; ++i)
-       event[i] = c.event[i];
+  Cronologia& Cronologia::operator=(const Cronologia& c){
+    if(this != &c){
+      LiberarMemoria();
+      Copiar(c.event, c.reservados, c.neventos);
+    }
+    return *this;
   }
 
 //Añade objeto de Fecha_Historica
@@ -73,7 +91,7 @@ using namespace std;
      int i=0;
      bool valido=false;
      while(i<neventos && !valido){
-        if(event[i].getAnio()==f)
+        if(event[i].GetAnio()==f)
            valido = true;
         else
            ++i;
@@ -90,7 +108,7 @@ using namespace std;
      for (int i=0; i < neventos; ++i){
         Fecha_Historica aux;
         if(event[i].buscarEventos(s,aux)){
-           nuevo.aniadirEvento(aux);
+           nuevo.AddEvento(aux);
         }
      }
      nuevo.ordenar();
@@ -101,7 +119,7 @@ using namespace std;
   ostream& operator<< (ostream& os, const Cronologia& c){
      for(int i=0; i<c.neventos; i++)
         os << c.event[i];
-     return os;     
+     return os;
   }
 
 //Operador >>
@@ -111,4 +129,4 @@ using namespace std;
         c.aniadirEvento(b);
      }
      return is;
-  } 
+}
