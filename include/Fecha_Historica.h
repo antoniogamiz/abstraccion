@@ -17,24 +17,24 @@ using namespace std;
   *  @brief T.D.A. Fecha_Historica
   *
   * Una instancia @e c del tipo de datos abstracto @c Fecha_Historica es un objeto
-  * con cuatro campos, tres enteros y un vector de string  
-  * Uno de los enteros es la fecha base del conjunto de eventos y los otros dos son la base del   
+  * con cuatro campos, tres enteros y un vector de string
+  * Uno de los enteros es la fecha base del conjunto de eventos y los otros dos son la base del
   * vector dinamico que representamos como
   *
-  * Año 
-  * num_eventos 
+  * Año
+  * num_eventos
   * evento/s:
   * *)Fecha_Historica_1
   * ...
   * ...
-  * *)Fecha_Historica_N 
+  * *)Fecha_Historica_N
   *
   * Un ejemplo de su uso:
   * @include pruebacronologia.cpp
   *
   * @author
-  * @author 
-  * @date 
+  * @author
+  * @date
   */
 
 class Fecha_Historica {
@@ -54,35 +54,40 @@ class Fecha_Historica {
   *
   * Un objeto válido @e rep del TDA Fecha_Historica representa al valor
   *
-  * Año 
-  * num_eventos 
+  * Año
+  * num_eventos
   * evento/s:
   * *)Fecha_Historica_1
   * ...
   * ...
-  * *)Fecha_Historica_N 
+  * *)Fecha_Historica_N
   *
   *
   */
 
 
   int anio;           /**< Año */
-  
+
   int numeventos;       /**< número de Eventos Historicos almacenados para ese Año */
-  
+
   int reservados;     /**< número de elementos reservados */
-  
+
   string *str;        /**< vector de string de Eventos Historicos */
 
-  void resize(int r); /**< Funcion privada para mantener el vector dinámico de string */
-  
-  
+  void Resize(int r); /**< Funcion privada para mantener el vector dinámico de string */
+
+  void Copiar(int anios, string *eventos, int num_eventos);
+
+  void ReservarMemoria(int tamanio);
+
+  void LiberarMemoria();
+
 
  public:
 
 /**
-  * @brief Constructor por defecto de la clase. Lo creamos sencillamente para evitar 
-  * errores o asignaciones de basura a objetos de nuestra clase. Crea una Fecha Historica 
+  * @brief Constructor por defecto de la clase. Lo creamos sencillamente para evitar
+  * errores o asignaciones de basura a objetos de nuestra clase. Crea una Fecha Historica
   * por defecto con año 0, con el vector nulo y 0 numeventos y reservados
   */
 
@@ -109,7 +114,7 @@ class Fecha_Historica {
 
   Fecha_Historica(const Fecha_Historica& e);
 
-  
+
   Fecha_Historica& operator=(const Fecha_Historica& e);
 
 /**
@@ -117,10 +122,7 @@ class Fecha_Historica {
   */
 
   ~Fecha_Historica(){
-     anio=0;
-     reservados=0;
-     numeventos=0;
-     delete[] str;
+    LiberarMemoria();
   }
 
 
@@ -129,7 +131,7 @@ class Fecha_Historica {
   * @return int con el valor del campo anio
   */
 
-  int getAnio ();
+  int GetAnio ();
 
 
 
@@ -138,7 +140,7 @@ class Fecha_Historica {
   * @param event string con evento a añadir
   */
 
-  void aniadirevento(string& event);
+  void AddEvento(string& event);
 
 
 /**
@@ -155,7 +157,7 @@ class Fecha_Historica {
   * @brief Salida de un Fecha_Historica a ostream
   * @param os stream de salida
   * @param e Fecha_Historica a escribir
-  * @post Se muestra la Fecha_Historica en formato "año#evento1#evento2#...#eventoN" 
+  * @post Se muestra la Fecha_Historica en formato "año#evento1#evento2#...#eventoN"
   */
 
   friend ostream& operator<< (ostream& os, const Fecha_Historica& e);
@@ -168,7 +170,7 @@ class Fecha_Historica {
   * @pre La entrada tiene el formato "año#evento1#evento2#...#eventoN
   */
 
-  friend istream& operator>> (istream& is, Fecha_Historica& e);  
+  friend istream& operator>> (istream& is, Fecha_Historica& e);
 
 };
 
