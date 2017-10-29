@@ -134,6 +134,14 @@ class Fecha_Historica {
   int GetAnio ();
 
 
+  /**
+    * @brief Método de acceso al número de eventos de la Fecha_Historica
+    * @return int con el valor del campo numeventos
+    */
+
+    int GetNumEventos ();
+
+
 
 /**
   * @brief Añade un evento
@@ -152,6 +160,21 @@ class Fecha_Historica {
 
 
   bool buscarEventos(string s, Fecha_Historica &matches);
+
+
+  /**
+    * @brief Busca un evento dentro de todos los de una fecha histórica.
+    * @param event string con el evento a buscar
+    * @return Devuelve true o false indicando si está o no repetido
+    */
+  bool EstaRepetido(string event);
+
+  /**
+    * @brief Recorre los eventos y si hay uno repetido lo elimina
+    * @return No devuelve nada.
+    */
+
+  void EliminaEventosRepetidos();
 
 /**
   * @brief Salida de un Fecha_Historica a ostream
