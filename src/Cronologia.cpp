@@ -58,7 +58,7 @@ using namespace std;
      Copiar(eh,n,n);
   }
 
-//Constructor de copias
+//Constructor de copia
    Cronologia::Cronologia(const Cronologia& c){
     *this=c;
    }
@@ -86,12 +86,12 @@ using namespace std;
   }
 
 
-//Busca un evento en la Cronología y devuelve su posición en el vector
+//Busca un año en la Cronología y devuelve si dicho año está en la cronología o no.
   int Cronologia::buscarAnio(int f){
      int i=0;
      bool valido=false;
      while(i<neventos && !valido){
-        if(event[i].GetAnio()==f)
+        if(event[i]->GetAnio()==f)
            valido = true;
         else
            ++i;
@@ -100,6 +100,56 @@ using namespace std;
         i=-1;
      return i;
   }
+
+//Devuelve el año en el que ha habido un mayor número de eventos
+  int Cronologia::MaxNumEvents(){
+    int max= event[0]->GetNumEventos();
+    int anio_max= event[0]->GetAnio();
+
+    for(int i=1; i< neventos; i++){
+      if(event[i]->GetNumEventos() > max){
+        max= event[i]->GetNumEventos();
+        anio_max= event[0]->GetAnio();
+      }
+    }
+    return anio_max;
+  }
+//Devuelve si un año está repetido o no dentro de la Cronología
+  bool Cronologia::EstaRepetido(int anio){
+    bool repetido= false;
+
+    for(int i= 0; i< neventos && !repetido; i++){
+      if(event[i]->GetAnio() == anio)
+        repetido= true;
+
+    }
+    return repetido;
+  }
+
+  void Cronologia::EliminaAniosRepetidos(){
+    ordenar();
+    for(int i= 0; i< neventos; i++){
+      if(EstaRepetido(event[i]->GetAnio())){
+        Fecha_Historica *aux = new Fecha_Historica [reservados];
+        for(int j= 0; j< i; j++)
+          aux[j]= event[j];
+
+        for(int j= i+1; j< neventos; j++)
+          aux[j] = event[j+1];
+
+        aux[i]->anio = event[i]-> anio;
+        aux[i]->str = new string []
+
+
+
+
+      }
+
+
+    }
+  }
+
+
 
 
 //Busca un evento en la Cronología y devuelve su posición en el vector
@@ -130,3 +180,4 @@ using namespace std;
      }
      return is;
 }
+
