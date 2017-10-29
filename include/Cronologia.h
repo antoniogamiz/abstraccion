@@ -17,28 +17,28 @@ using namespace std;
   *  @brief T.D.A. Cronologia
   *
   * Una instancia @e c del tipo de datos abstracto @c Cronologia es un objeto
-  * con tres campos, dos enteros y un vector de objetos de Fecha_Historica  
+  * con tres campos, dos enteros y un vector de objetos de Fecha_Historica
   * Los dos enteros son utilizados para trabajar
   * con el vector dinámicamente. Lo representamos como
   *
   * Año_1 a.C/d.C N_eventos evento/s:
   * *)Fecha_Historica_1
   * ...
-  * *)Fecha_Historica_N 
+  * *)Fecha_Historica_N
   * .
   * .
   * .
   * Año_N a.C/d.C N_eventos evento/s:
   * *)Fecha_Historica_1
   * ...
-  * *)Fecha_Historica_M 
+  * *)Fecha_Historica_M
   *
   * Un ejemplo de su uso:
   * @include pruebacronologia.cpp
   *
-  * @author 
-  * @author 
-  * @date 
+  * @author
+  * @author
+  * @date
   */
 
 class Cronologia {
@@ -59,14 +59,14 @@ class Cronologia {
   * Año_1 a.C/d.C N_eventos evento/s:
   * *)Fecha_Historica_1
   * ...
-  * *)Fecha_Historica_N 
+  * *)Fecha_Historica_N
   * .
   * .
   * .
   * Año_N a.C/d.C N_eventos evento/s:
   * *)Fecha_Historica_1
   * ...
-  * *)Fecha_Historica_M 
+  * *)Fecha_Historica_M
   *
   */
 
@@ -76,12 +76,15 @@ class Cronologia {
 
   void resize(int r);         /**< Funcion privada para mantener el vector dinámico de string */
   void ordenar();             /**< Función privada para ordener los eventos según la fecha */
+  void LiberarMemoria();
+  void Copiar(Fecha_Historica *f, int reserv, int eventos);
+  void ReservarMemoria(int reserv);
 
  public:
 
 /**
-  * @brief Constructor por defecto de la clase. Lo creamos sencillamente para evitar 
-  * errores o asignaciones de basura a objetos de nuestra clase. Crea una Cronologia 
+  * @brief Constructor por defecto de la clase. Lo creamos sencillamente para evitar
+  * errores o asignaciones de basura a objetos de nuestra clase. Crea una Cronologia
   * por defecto con año 0, con el vector nulo y 0 nanios y reservados
   */
 
@@ -112,9 +115,7 @@ class Cronologia {
   */
 
   ~Cronologia(){
-     neventos=0;
-     reservados=0;
-     delete[] event;
+     LiberarMemoria();
   }
 
 /**
@@ -145,7 +146,7 @@ class Cronologia {
   */
 
   Cronologia buscarEventos(string s);
-  
+
 
 /**
   * @brief Salida de una Cronologia a ostream
@@ -167,6 +168,6 @@ class Cronologia {
 
   friend istream& operator>> (istream& is, Cronologia& c);
 
-};  
+};
 
 #endif
