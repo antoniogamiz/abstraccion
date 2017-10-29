@@ -1,203 +1,162 @@
-/**
-  * @file Cronologia.h
-  * @brief Fichero cabecera del TDA Cronologia
-  *
-  */
-
-#ifndef _CRONOLOGIA_
-#define _CRONOLOGIA_
-
 #include <iostream>
-#include <string>
+#include<sstream>
 #include "Fecha_Historica.h"
 
 using namespace std;
 
-/**
-  *  @brief T.D.A. Cronologia
-  *
-  * Una instancia @e c del tipo de datos abstracto @c Cronologia es un objeto
-  * con tres campos, dos enteros y un vector de objetos de Fecha_Historica
-  * Los dos enteros son utilizados para trabajar
-  * con el vector dinámicamente. Lo representamos como
-  *
-  * Año_1 a.C/d.C N_eventos evento/s:
-  * *)Fecha_Historica_1
-  * ...
-  * *)Fecha_Historica_N
-  * .
-  * .
-  * .
-  * Año_N a.C/d.C N_eventos evento/s:
-  * *)Fecha_Historica_1
-  * ...
-  * *)Fecha_Historica_M
-  *
-  * Un ejemplo de su uso:
-  * @include pruebacronologia.cpp
-  *
-  * @author
-  * @author
-  * @date
-  */
-
-class Cronologia {
-
- private:
-/**
-  * @page repConjunto Rep del TDA Cronologia
-  *
-  * @section invConjunto Invariante de la representación
-  *
-  * El invariante está ligado al de los Eventos_Historicos \e rep.anio < 0 && rep.anio > 9999
-  * que ya hemos fijado anteriormente
-  *
-  * @section faConjunto Función de abstracción
-  *
-  * Un objeto válido @e rep del TDA Cronologia representa al valor
-  *
-  * Año_1 a.C/d.C N_eventos evento/s:
-  * *)Fecha_Historica_1
-  * ...
-  * *)Fecha_Historica_N
-  * .
-  * .
-  * .
-  * Año_N a.C/d.C N_eventos evento/s:
-  * *)Fecha_Historica_1
-  * ...
-  * *)Fecha_Historica_M
-  *
-  */
-
-  int neventos;               /**< número objetos Fecha_Historica almacenados */
-  int reservados;             /**< número de elementos reservados, */
-  Fecha_Historica *event;    /**< vector de Eventos Historicos */
-
-  void resize(int r);         /**< Funcion privada para mantener el vector dinámico de string */
-  void ordenar();             /**< Función privada para ordener los eventos según la fecha */
-  void LiberarMemoria();
-  void Copiar(Fecha_Historica *f, int reserv, int eventos);
-  void ReservarMemoria(int reserv);
-
- public:
-
-/**
-  * @brief Constructor por defecto de la clase. Lo creamos sencillamente para evitar
-  * errores o asignaciones de basura a objetos de nuestra clase. Crea una Cronologia
-  * por defecto con año 0, con el vector nulo y 0 nanios y reservados
-  */
-
-  Cronologia();
-
-/**
-  * @brief Constructor de la clase
-  * @param eh vector de Fecha_Historica
-  * @param n número de objetos Fecha_Historica que contienen el vector eh que se pasa como parámetro
-  * @return Crea el evento con n Fecha_Historica asociados
-  * @pre n debe ser un número positivo igual al número de objetos contenidos en el vector eh
-  */
-
-  Cronologia(Fecha_Historica *eh, int n);
-
-/**
-  * @brief Constructor de copias de la clase
-  * @param c objeto de la clase que se quiere copiar
-  * @return Crea el evento con los datos de c
-  */
-
-  Cronologia(const Cronologia& c);
-
-  Cronologia& operator=(const Cronologia& c);
-
-/**
-  * @brief Destructor de la clase. Hace un delete del vector de Fecha_Historica
-  */
-
-  ~Cronologia(){
-     LiberarMemoria();
+//Resize simple
+  void Fecha_Historica::Resize(int r){
+     string *aux = new string[r];
+     for(int i=0; i<numeventos; ++i){
+        aux[i]=str[i];
+     }
+     delete[] str;
+     str = aux;
+     reservados = r;
   }
 
-/**
-  * @brief Añade un Evento Histórico  en la Cronología
-  * @param eh el nuevo Evento Historico
-  * @pre la posición
-  * @return no devuelve nada
-  */
+  void Fecha_Historica::ReservarMemoria(int n){
+    assert(n>0);
+    reservados=n;
+    string *str = new string [n];
+  }
 
-  void aniadirEvento(Fecha_Historica& eh);
+  void Fecha_Historica::LiberarMemoria(){
+    anio=numeventos=reservados=0;
+    delete [] str;
+  }
 
+  void Fecha_Historica::Copiar(string *s, int reserv, int num_events){
+    assert(reserv >= num_events);
+    ReservarMemoria(reserv);
+    numeventos=num_events;
+    for(int i=0; i<num_events; i++)
+      str[i]=s[i];
+  }
 
-
-/**
-  * @brief Busca un Evento Histórico dado su fecha
-  * @param f la fecha del evento a buscar
-  * @pre la fecha debe ser válida
-  * @return Devuelve la posición del evento
-  */
-
-  int buscarAnio(int f);
-
-
-  /**
-  * @brief Busca si un año está repetido en la Cronología
-  * @param anio año que queremos saber si aparece más de una vez o no
-  * @return Devuelve true si está repetido, false si no lo está
-  */
-
-  bool EstaRepetido(int anio);
+//Constructor vacío
+  Fecha_Historica::Fecha_Historica():anio(0),reservados(0),numeventos(0),str(0){}
 
 
-  /**
-    * @brief Recorre la Cronología y si hay una fecha que se repite crea otra con la unión de los eventos
-    * @return No devuelve nada.
-    */
+//Constructor con parametros año, cadena de eventos y número de eventos a añadir
+  Fecha_Historica::Fecha_Historica(int a, string *s, int n){
+     assert(a >= 0 && a<= 9999);
+     anio = a;
+     ReservarMemoria(n);
+     Copiar(s,n,n);
+  }
 
-  void EliminaAniosRepetidos();
+//Constructor de copia
+   Fecha_Historica::Fecha_Historica(const Fecha_Historica &e){
+    *this=e;
+   }
 
-
-
-  /**
-  * @brief buscador de eventos dado una palabra clave
-  * @param s vector de string con la palabra a buscar
-  * @return Devuelve una Cronología
-  */
-
-  Cronologia buscarEventos(string s);
-
-  /**
-  * @brief Busca el año que mayor número de eventos ha tenido
-  * @return Año con con mayor número de eventos
-  */
-
-  int MaxNumEvents();
+   Fecha_Historica& Fecha_Historica::operator=(const Fecha_Historica &e){
+       if(this != &e){
+         LiberarMemoria();
+         anio=e.anio;
+         Copiar(e.str,e.reservados,e.numeventos);
+       }
+       return *this;
+   }
 
 
+//Método de acceso a año
+   int Fecha_Historica::GetAnio(){
+    return anio;
+   }
 
-  Cronologia buscarEventos(string s);
+//Método de acceso al número de eventos acaecidos en un año
+  int Fecha_Historica::GetNumEventos(){
+    return numeventos;
+  }
 
 
+//Añade un evento
+  void Fecha_Historica::AddEvento(string &event){
+     if (numeventos == reservados){
+        if (numeventos==0)
+           Resize(1);
+        else
+        Resize(2*reservados);
+     }
+     str[numeventos]=event;
+     numeventos++;
+  }
 
-/**
-  * @brief Salida de una Cronologia a ostream
-  * @param os stream de salida
-  * @param c Cronologia a escribir
-  * @post Se obtienen varios años seguidos de la cadena de Eventos_Historico con el formato
-  * de Fecha_Historica
-  */
+  bool Fecha_Historica::EstaRepetido(string event){
+    bool repetido=false;
+    for(int i= 0; i< numeventos && !repetido; i++){
+      if(strcmp(event, str[i]) == 0)
+        repetido=true;
+    }
+    return repetido;
+  }
 
-  friend ostream& operator<< (ostream& os, const Cronologia& c);
+//Elimina los eventos repetidos dentro de una Fecha
+  void Fecha_Historica::EliminaEventosRepetidos(){
+    for(int i=0; i< numeventos; i++){
+      if(EstaRepetido(str[i])){
+        string *aux = new string [reservados];
+        for(int k= 0; k<i; k++)
+          aux[k]= str[k];
 
-/**
-  * @brief Entrada de una Cronologia desde istream
-  * @param is stream de entrada
-  * @param c Cronologia que recibe el valor
-  * @retval La Cronologia leída en c
-  * @pre La entrada tiene el formato de Fecha_Historica neventos numero de veces
-  */
+        for(k=i; k< numeventos; k++)
+          aux[k]= str[k+1];
 
-  friend istream& operator>> (istream& is, Cronologia& c);
+        delete [] str;
+        str = aux;
+        numeventos--;
+      }
+    }
+  }
 
-};
 
-#endif
+//Buscador de eventos
+  bool Fecha_Historica::buscarEventos(string s, Fecha_Historica &matches){
+     bool encontrado=false;
+     for (int i=0; i < numeventos; ++i){
+        if(str[i].find(s) != -1 ){
+           matches.AddEvento(str[i]);
+           encontrado = true;
+        }
+     }
+     if (encontrado){
+        matches.anio=anio;
+      }
+    return encontrado;
+   }
+
+//Operador <<
+  ostream& operator<< (ostream& os, const Fecha_Historica& e){
+    os << e.anio;
+    for(int i=0; i<e.numeventos; i++)
+        os << '#' << e.str[i];
+    os << endl;
+    return os;
+  }
+
+//Operador >>
+  istream& operator>> (istream& is, Fecha_Historica& e){
+    string line; char c;
+    is >> e.anio >> c;
+    getline(is, line);
+
+    int n=1;
+    for(int i=0; i<line.length(); i++)
+        if(line[i]=='#')
+            n++;
+
+    e.numeventos=n;
+    e.reservados=e.numeventos;
+    delete[] e.str;
+    e.str=NULL;
+    e.str=new string[n];
+
+    stringstream ss(line);
+
+    for(int i=0; i<n; i++)
+        getline(ss, e.str[i], '#');
+    return is;
+
+  }
