@@ -140,12 +140,42 @@ class Cronologia {
 
 
   /**
+  * @brief Busca si un año está repetido en la Cronología
+  * @param anio año que queremos saber si aparece más de una vez o no
+  * @return Devuelve true si está repetido, false si no lo está
+  */
+
+  bool EstaRepetido(int anio);
+
+
+  /**
+    * @brief Recorre la Cronología y si hay una fecha que se repite crea otra con la unión de los eventos
+    * @return No devuelve nada.
+    */
+
+  void EliminaAniosRepetidos();
+
+
+
+  /**
   * @brief buscador de eventos dado una palabra clave
   * @param s vector de string con la palabra a buscar
   * @return Devuelve una Cronología
   */
 
   Cronologia buscarEventos(string s);
+
+  /**
+  * @brief Busca el año que mayor número de eventos ha tenido
+  * @return Año con con mayor número de eventos
+  */
+
+  int MaxNumEvents();
+
+
+
+  Cronologia buscarEventos(string s);
+
 
 
 /**
