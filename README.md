@@ -1,6 +1,7 @@
-# abstraccion
+# Abstracción
 Práctica 2 (ED)
-Enunciado:
+
+\nEnunciado:
 Con la finalidad de mejorar nuestros conocimientos sobre Historia, queremos desarrollar una
 aplicación que nos permita obtener acontecimientos históricos sucedidos en una fecha y
 viceversa, averiguar el año en el que sucedió algún acontecimiento. Con este fin,
@@ -11,7 +12,7 @@ acontecimientos en forma de número natural, y cada uno de los acontecimientos
 podrán contener más de una palabra.
 • Cronología: Es un conjunto de fechas históricas ordenadas por año.
 
-Fichero prueba
+\nFichero prueba
 Para poder probar nuestro programa usaremos un fichero compuesto de una serie de líneas.
 Cada línea se corresponde con un año y a continuación, separados por el carácter '#', los
 acontecimientos que sucedieron en ese año. Por ejemplo un trozo del fichero de películas
