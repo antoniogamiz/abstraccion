@@ -149,6 +149,8 @@ class Fecha_Historica {
 
   void addEvento(string& event);
 
+  bool estaRepetido(string evento);
+
 
 /**
   * @brief Búsqueda de eventos en una Fecha_Historica dada una palabra clave s

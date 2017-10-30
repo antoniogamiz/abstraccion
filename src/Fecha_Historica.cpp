@@ -78,6 +78,16 @@ using namespace std;
      numeventos++;
   }
 
+  bool Fecha_Historica::estaRepetido(string evento){
+    bool repetido=false;
+    for(int i= 0; i< numeventos && !repetido; i++){
+      if(evento.compare(str[i]) == 0)
+        repetido=true;
+    }
+    return repetido;
+  }
+
+
 
 
 
