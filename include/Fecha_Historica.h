@@ -172,7 +172,7 @@ class Fecha_Historica {
   * @param matches nueva Fecha_Historica donde se introducen únicamente los eventos de this que contienen el string s
   * @return Devuelve true o false indicando si hay o no algún match de la cadena clave s en los eventos de this
   */
-
+  void unionEventos(const Fecha_Historica &f1, const Fecha_Historica &f2, Fecha_Historica &u );
 
   bool buscarEventos(string s, Fecha_Historica &matches);
 

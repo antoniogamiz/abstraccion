@@ -90,7 +90,17 @@ using namespace std;
     }
     return repetido;
   }
+  void Fecha_Historica::unionEventos(const Fecha_Historica &f1, const Fecha_Historica &f2, Fecha_Historica &u ){
+    for(int i= 0; i< f1.numeventos; i++){
+      if(! u.estaRepetido(f1.str[i]))
+        u.addEvento(f1.str[i]);
+    }
 
+    for(int i= 0; i< f1.numeventos; i++){
+      if(! u.estaRepetido(f2.str[i]))
+        u.addEvento(f2.str[i]);
+    }
+  }
 
 //Buscador de eventos
   bool Fecha_Historica::buscarEventos(string s, Fecha_Historica &matches){
