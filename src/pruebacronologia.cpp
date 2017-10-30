@@ -46,24 +46,24 @@ int main(int argc, char * argv[]){
 
    //Comprobamos el funcionamiento de Fecha_Historica::estaRepetido;
 
-   string evento;
-   cout << "Introduzca un evento para comprobar si está en alguna de las cronologías:" << endl;
-   cin >> evento;
-   if(cron1.estaRepetido(evento))
-    cout << "Este evento se encuentra en "<< argv[1] << "." << endl;
-  else
-    cout << "Este evento no se encuentra en "<< argv[1] << "." << endl;  
-  if(cron2.estaRepetido(evento))
-    cout << "Este evento se encuentra en "<< argv[2] << "." << endl;
-  else
-    cout << "Este evento no se encuentra en "<< argv[2] << "." << endl;
+  //  string evento;
+  //  cout << "Introduzca un evento para comprobar si está en alguna de las cronologías:" << endl;
+  //  cin >> evento;
+  //  if(cron1.estaRepetido(evento))
+  //   cout << "Este evento se encuentra en "<< argv[1] << "." << endl;
+  // else
+  //   cout << "Este evento no se encuentra en "<< argv[1] << "." << endl;  
+  // if(cron2.estaRepetido(evento))
+  //   cout << "Este evento se encuentra en "<< argv[2] << "." << endl;
+  // else
+  //   cout << "Este evento no se encuentra en "<< argv[2] << "." << endl;
 
 
   //Unimos las dos cronologías y mostramos por pantalla el resultado.
    
-  Cronologia unionCron;
+  Cronologia u;
 
-  cout << "Cronología resultante de unir: " << argv[1] << " con " << argv[2] << " :" << endl << unionCron << endl;
+  cout << "Cronología resultante de unir: " << argv[1] << " con " << argv[2] << " :" << endl << u << endl;
 
 
   //Intersecamos las dos cronologías y mostramos por pantalla el resultado.

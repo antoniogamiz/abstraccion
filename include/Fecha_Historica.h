@@ -132,6 +132,8 @@ class Fecha_Historica {
 
   int getAnio ();
 
+  void setAnio(int a);
+
 
   /**
     * @brief Método de acceso al número de eventos de la Fecha_Historica
@@ -160,7 +162,6 @@ class Fecha_Historica {
   bool estaRepetido(string evento);
 
 
-  string * eliminaEventosRepetidos();
   
 
 
