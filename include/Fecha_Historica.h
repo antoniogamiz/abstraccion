@@ -167,7 +167,7 @@ class Fecha_Historica {
 
 
   /**
-    * @brief Elimina los eventos repetidos en un vector
+    * @brief Recorre un vector de string y si encuentra un elemento repetido lo elimina
     */
 
 
@@ -192,19 +192,6 @@ class Fecha_Historica {
 
   bool buscarEventos(string s, Fecha_Historica &matches);
 
-
-  /**
-    * @brief Busca un evento dentro de todos los de una fecha histórica.
-    * @param event string con el evento a buscar
-    * @return Devuelve true o false indicando si está o no repetido
-    */
-  bool estaRepetido(string event);
-
-  /**
-    * @brief Recorre los eventos y si hay uno repetido lo elimina
-    */
-
-  void eliminaEventosRepetidos();
 
 /**
   * @brief Salida de un Fecha_Historica a ostream
