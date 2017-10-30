@@ -20,7 +20,7 @@ using namespace std;
   void Cronologia::ordenar(){
      for (int i=neventos-1; i>0; --i)
       for (int j=0; j<i; ++j)
-         if (event[j].GetAnio() > event[j+1].GetAnio()) {
+         if (event[j].getAnio() > event[j+1].getAnio()) {
             Fecha_Historica aux;
             aux = event[j];
             event[j] = event[j+1];
@@ -28,12 +28,12 @@ using namespace std;
          }
   }
 
-  void Cronologia::LiberarMemoria(){
+  void Cronologia::liberarMemoria(){
     neventos=reservados=0;
-    delete[] event;
+    delete [] event;
   }
 
-  void Cronologia::ReservarMemoria(int reserv){
+  void Cronologia::reservarMemoria(int reserv){
     if(reserv>0){
       reservados=reserv;
       Fecha_Historica *event = new Fecha_Historica [reserv];
@@ -42,8 +42,8 @@ using namespace std;
       reservados=0;
   }
 
-  void Cronologia::Copiar(Fecha_Historica *f, int reserv, int eventos){
-    ReservarMemoria(reserv);
+  void Cronologia::copiar(Fecha_Historica *f, int reserv, int eventos){
+    reservarMemoria(reserv);
     neventos=eventos;
     for(int i= 0; i< eventos; i++)
       event[i]=f[i];
@@ -66,14 +66,14 @@ using namespace std;
 
   Cronologia& Cronologia::operator=(const Cronologia& c){
     if(this != &c){
-      LiberarMemoria();
-      Copiar(c.event, c.reservados, c.neventos);
+      liberarMemoria();
+      copiar(c.event, c.reservados, c.neventos);
     }
     return *this;
   }
 
 //Añade objeto de Fecha_Historica
-  void Cronologia::aniadirEvento(Fecha_Historica& eh){
+  void Cronologia::addEvento(Fecha_Historica& eh){
      if (neventos == reservados){
         if (neventos==0)
            resize(1);
@@ -91,7 +91,7 @@ using namespace std;
      int i=0;
      bool valido=false;
      while(i<neventos && !valido){
-        if(event[i]->GetAnio()==f)
+        if(event[i].getAnio()==f)
            valido = true;
         else
            ++i;
@@ -102,34 +102,35 @@ using namespace std;
   }
 
 //Devuelve el año en el que ha habido un mayor número de eventos
-  int Cronologia::MaxNumEvents(){
-    int max= event[0]->GetNumEventos();
-    int anio_max= event[0]->GetAnio();
+  int Cronologia::maxNumEvents(){
+    int max= event[0].getNumEventos();
+    int anio_max= event[0].getAnio();
 
     for(int i=1; i< neventos; i++){
-      if(event[i]->GetNumEventos() > max){
-        max= event[i]->GetNumEventos();
-        anio_max= event[0]->GetAnio();
+      if(event[i].getNumEventos() > max){
+        max= event[i].getNumEventos();
+        anio_max= event[0].getAnio();
       }
     }
     return anio_max;
   }
+
 //Devuelve si un año está repetido o no dentro de la Cronología
-  bool Cronologia::EstaRepetido(int anio){
+  bool Cronologia::estaRepetido(int anio){
     bool repetido= false;
 
     for(int i= 0; i< neventos && !repetido; i++){
-      if(event[i]->GetAnio() == anio)
+      if(event[i].getAnio() == anio)
         repetido= true;
 
     }
     return repetido;
   }
 
-  void Cronologia::EliminaAniosRepetidos(){
+  void Cronologia::eliminaAniosRepetidos(){
     ordenar();
     for(int i= 0; i< neventos; i++){
-      if(EstaRepetido(event[i]->GetAnio())){
+      if(estaRepetido(event[i].getAnio())){
         Fecha_Historica *aux = new Fecha_Historica [reservados];
         for(int j= 0; j< i; j++)
           aux[j]= event[j];
@@ -138,18 +139,11 @@ using namespace std;
           aux[j] = event[j+1];
 
         aux[i]->anio = event[i]-> anio;
-        aux[i]->str = new string []
-
-
-
+        aux[i]->str = new string [];
 
       }
-
-
     }
   }
-
-
 
 
 //Busca un evento en la Cronología y devuelve su posición en el vector
@@ -158,7 +152,7 @@ using namespace std;
      for (int i=0; i < neventos; ++i){
         Fecha_Historica aux;
         if(event[i].buscarEventos(s,aux)){
-           nuevo.AddEvento(aux);
+           nuevo.addEvento(aux);
         }
      }
      nuevo.ordenar();
@@ -176,8 +170,7 @@ using namespace std;
   istream& operator>> (istream& is, Cronologia& c){
      Fecha_Historica b;
      while(is >> b){
-        c.aniadirEvento(b);
+        c.addEvento(b);
      }
      return is;
 }
-
