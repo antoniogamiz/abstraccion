@@ -1,6 +1,5 @@
 #include <iostream>
 #include<sstream>
-#include<string>
 #include "Fecha_Historica.h"
 
 using namespace std;
@@ -87,7 +86,49 @@ using namespace std;
      numeventos++;
   }
 
+  bool Fecha_Historica::estaRepetido(string evento){
+    bool repetido=false;
+    for(int i= 0; i< numeventos && !repetido; i++){
+      if(evento.compare(str[i]) == 0)
+        repetido=true;
+    }
+    return repetido;
+  }
 
+
+//Elimina los eventos repetidos dentro de una Fecha
+  void Fecha_Historica::eliminaEventosRepetidos(){
+    for(int i=0; i< numeventos; i++){
+      if(estaRepetido(str[i])){
+        string *aux = new string [reservados];
+        for(int k= 0; k<i; k++)
+          aux[k]= str[k];
+
+        for(k=i; k< numeventos; k++)
+          aux[k]= str[k+1];
+
+        delete [] str;
+        str = aux;
+        numeventos--;
+      }
+    }
+  }
+
+//Dadas dos fechas históricas une sus eventos sin que haya ningún elemento repetido
+    str* Fecha_Historica::unionEventos(Fecha_Historica f1, Fecha_Historica f2){
+      Fecha_Historica u;
+
+      for(int i= 0; i< f1.numeventos; i++){
+        if(! u.estaRepetido(f1.str[i]))
+          u.addEvento(f1.str[i]);
+      }
+
+      for(int i= 0; i< f1.numeventos; i++){
+        if(! u.estaRepetido(f2.str[i]))
+          u.addEvento(f2.str[i]);
+      }
+      return u.str;
+    }
 
 
 //Buscador de eventos
