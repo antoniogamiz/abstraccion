@@ -157,6 +157,31 @@ class Fecha_Historica {
   void addEvento(string& event);
 
 
+  /**
+    * @brief Comprueba si un evento está repetido dentro del vector de eventos de una fecha histórica
+    * @param evento que se quiere ver si está repetido
+    * @return Devuelve true si está repetido, false si no
+    */
+
+  bool Fecha_Historica::estaRepetido(string evento);
+
+
+  /**
+    * @brief Elimina los eventos repetidos en un vector
+    */
+
+
+  void Fecha_Historica::eliminaEventosRepetidos()
+
+
+  /**
+    * @brief Unión de eventos de dos fechas históricas
+    * @param f1, f2 fechas históricas de las cuales se van a tomar los eventos
+    * @return Devuelve un vector de string con los elementos de la unión de ambas fechas
+    */
+    str* Fecha_Historica::unionEventos(Fecha_Historica f1, Fecha_Historica f2);
+
+
 /**
   * @brief Búsqueda de eventos en una Fecha_Historica dada una palabra clave s
   * @param s string con la palabra a buscar
@@ -173,10 +198,13 @@ class Fecha_Historica {
     * @param event string con el evento a buscar
     * @return Devuelve true o false indicando si está o no repetido
     */
+  bool estaRepetido(string event);
 
   /**
     * @brief Recorre los eventos y si hay uno repetido lo elimina
     */
+
+  void eliminaEventosRepetidos();
 
 /**
   * @brief Salida de un Fecha_Historica a ostream
