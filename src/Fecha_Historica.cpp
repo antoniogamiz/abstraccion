@@ -88,6 +88,17 @@ using namespace std;
   }
 
 
+  //Elimina los eventos repetidos dentro de una Fecha
+  string* Fecha_Historica::eliminaEventosRepetidos(){
+    Fecha_Historica aux;
+    aux.anio = anio;
+
+    for(int i= 0; i< numeventos; i++){
+      if(! aux.estaRepetido(str[i]))
+        aux.addEvento(str[i]);
+    }
+    return aux.str;
+  }
 
 
 

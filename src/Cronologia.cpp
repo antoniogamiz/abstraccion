@@ -41,7 +41,6 @@ using namespace std;
   Cronologia::Cronologia():reservados(0),neventos(0),event(0){}
 
 
-
 //Constructor de copia
    Cronologia::Cronologia(const Cronologia& c){
     *this=c;
@@ -74,6 +73,13 @@ using namespace std;
      event[neventos]=eh;
      neventos++;
      ordenar();
+  }
+
+  bool Cronologia::estaRepetido(string evento){
+    bool repetida=false;
+    for(int i=0; i<neventos && !repetida; i++)
+      repetida=event[i].estaRepetido(evento);
+    return repetida;
   }
 
 

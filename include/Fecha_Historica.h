@@ -152,6 +152,11 @@ class Fecha_Historica {
   bool estaRepetido(string evento);
 
 
+  string * eliminaEventosRepetidos();
+  
+
+
+
 /**
   * @brief Búsqueda de eventos en una Fecha_Historica dada una palabra clave s
   * @param s string con la palabra a buscar

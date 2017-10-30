@@ -129,7 +129,8 @@ class Cronologia {
 
   void addEvento(Fecha_Historica& eh);
 
-
+  bool estaRepetido(string evento);
+  
 
 /**
   * @brief Busca un Evento Histórico dado su fecha
