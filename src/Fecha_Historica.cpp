@@ -5,7 +5,7 @@
 using namespace std;
 
 //Resize simple
-  void Fecha_Historica::Resize(int r){
+  void Fecha_Historica::resize(int r){
      string *aux = new string[r];
      for(int i=0; i<numeventos; ++i){
         aux[i]=str[i];
@@ -15,20 +15,22 @@ using namespace std;
      reservados = r;
   }
 
-  void Fecha_Historica::ReservarMemoria(int n){
+  void Fecha_Historica::reservarMemoria(int n){
     assert(n>0);
     reservados=n;
     string *str = new string [n];
   }
 
-  void Fecha_Historica::LiberarMemoria(){
+//Método que libera memoria dinámica
+  void Fecha_Historica::liberarMemoria(){
     anio=numeventos=reservados=0;
     delete [] str;
   }
 
-  void Fecha_Historica::Copiar(string *s, int reserv, int num_events){
+//Método que copia una fecha histórica
+  void Fecha_Historica::copiar(string *s, int reserv, int num_events){
     assert(reserv >= num_events);
-    ReservarMemoria(reserv);
+    reservarMemoria(reserv);
     numeventos=num_events;
     for(int i=0; i<num_events; i++)
       str[i]=s[i];
@@ -42,8 +44,8 @@ using namespace std;
   Fecha_Historica::Fecha_Historica(int a, string *s, int n){
      assert(a >= 0 && a<= 9999);
      anio = a;
-     ReservarMemoria(n);
-     Copiar(s,n,n);
+     reservarMemoria(n);
+     copiar(s,n,n);
   }
 
 //Constructor de copia
@@ -53,38 +55,38 @@ using namespace std;
 
    Fecha_Historica& Fecha_Historica::operator=(const Fecha_Historica &e){
        if(this != &e){
-         LiberarMemoria();
+         liberarMemoria();
          anio=e.anio;
-         Copiar(e.str,e.reservados,e.numeventos);
+         copiar(e.str,e.reservados,e.numeventos);
        }
        return *this;
    }
 
 
 //Método de acceso a año
-   int Fecha_Historica::GetAnio(){
+   int Fecha_Historica::getAnio(){
     return anio;
    }
 
 //Método de acceso al número de eventos acaecidos en un año
-  int Fecha_Historica::GetNumEventos(){
+  int Fecha_Historica::getNumEventos(){
     return numeventos;
   }
 
 
 //Añade un evento
-  void Fecha_Historica::AddEvento(string &event){
+  void Fecha_Historica::addEvento(string &event){
      if (numeventos == reservados){
         if (numeventos==0)
-           Resize(1);
+           resize(1);
         else
-        Resize(2*reservados);
+          resize(2*reservados);
      }
      str[numeventos]=event;
      numeventos++;
   }
 
-  bool Fecha_Historica::EstaRepetido(string event){
+  bool Fecha_Historica::estaRepetido(string event){
     bool repetido=false;
     for(int i= 0; i< numeventos && !repetido; i++){
       if(strcmp(event, str[i]) == 0)
@@ -94,9 +96,9 @@ using namespace std;
   }
 
 //Elimina los eventos repetidos dentro de una Fecha
-  void Fecha_Historica::EliminaEventosRepetidos(){
+  void Fecha_Historica::eliminaEventosRepetidos(){
     for(int i=0; i< numeventos; i++){
-      if(EstaRepetido(str[i])){
+      if(estaRepetido(str[i])){
         string *aux = new string [reservados];
         for(int k= 0; k<i; k++)
           aux[k]= str[k];
@@ -117,7 +119,7 @@ using namespace std;
      bool encontrado=false;
      for (int i=0; i < numeventos; ++i){
         if(str[i].find(s) != -1 ){
-           matches.AddEvento(str[i]);
+           matches.addEvento(str[i]);
            encontrado = true;
         }
      }
