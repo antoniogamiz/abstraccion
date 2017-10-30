@@ -109,7 +109,7 @@ using namespace std;
     for(int i=1; i< neventos; i++){
       if(event[i].getNumEventos() > max){
         max= event[i].getNumEventos();
-        anio_max= event[0].getAnio();
+        anio_max= event[i].getAnio();
       }
     }
     return anio_max;
