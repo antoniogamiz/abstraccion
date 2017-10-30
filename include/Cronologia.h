@@ -74,18 +74,18 @@ class Cronologia {
   int reservados;             /**< número de elementos reservados, */
   Fecha_Historica *event;    /**< vector de Eventos Historicos */
 
-  void resize(int r);         /**< Funcion privada para mantener el vector dinámico de string */
+  void resize(int r);         /**< Función privada para mantener el vector dinámico de string */
   void ordenar();             /**< Función privada para ordener los eventos según la fecha */
-  void LiberarMemoria();
-  void Copiar(Fecha_Historica *f, int reserv, int eventos);
-  void ReservarMemoria(int reserv);
+  void liberarMemoria();
+  void copiar(Fecha_Historica *f, int reserv, int eventos);
+  void reservarMemoria(int reserv);
 
  public:
 
 /**
   * @brief Constructor por defecto de la clase. Lo creamos sencillamente para evitar
   * errores o asignaciones de basura a objetos de nuestra clase. Crea una Cronologia
-  * por defecto con año 0, con el vector nulo y 0 nanios y reservados
+  * por defecto con año 0, con el vector nulo y 0 anios y reservados
   */
 
   Cronologia();
@@ -108,6 +108,12 @@ class Cronologia {
 
   Cronologia(const Cronologia& c);
 
+  /**
+    * @brief Operador de asignación de la clase
+    * @param c objeto de la clase que se quiere copiar
+    * @return Crea el evento con los datos de c
+    */
+
   Cronologia& operator=(const Cronologia& c);
 
 /**
@@ -115,7 +121,7 @@ class Cronologia {
   */
 
   ~Cronologia(){
-     LiberarMemoria();
+     liberarMemoria();
   }
 
 /**
@@ -125,7 +131,7 @@ class Cronologia {
   * @return no devuelve nada
   */
 
-  void aniadirEvento(Fecha_Historica& eh);
+  void addEvento(Fecha_Historica& eh);
 
 
 
@@ -145,15 +151,14 @@ class Cronologia {
   * @return Devuelve true si está repetido, false si no lo está
   */
 
-  bool EstaRepetido(int anio);
+  bool estaRepetido(int anio);
 
 
   /**
     * @brief Recorre la Cronología y si hay una fecha que se repite crea otra con la unión de los eventos
-    * @return No devuelve nada.
     */
 
-  void EliminaAniosRepetidos();
+  void eliminaAniosRepetidos();
 
 
 
@@ -170,7 +175,7 @@ class Cronologia {
   * @return Año con con mayor número de eventos
   */
 
-  int MaxNumEvents();
+  int maxNumEvents();
 
 
 
