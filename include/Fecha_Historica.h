@@ -137,7 +137,7 @@ class Fecha_Historica {
   * @return int con el valor del campo anio
   */
 
-  int getAnio ();
+  int getAnio();
 
 
   /**
@@ -145,7 +145,7 @@ class Fecha_Historica {
     * @return int con el valor del campo numeventos
     */
 
-    int getNumEventos ();
+    int getNumEventos();
 
 
 
@@ -178,9 +178,9 @@ class Fecha_Historica {
   /**
     * @brief Unión de eventos de dos fechas históricas
     * @param f1, f2 fechas históricas de las cuales se van a tomar los eventos
-    * @return Devuelve un vector de string con los elementos de la unión de ambas fechas
+    * @param num_events número de eventos que hay en la unión
     */
-    string* Fecha_Historica::unionEventos(Fecha_Historica f1, Fecha_Historica f2);
+    void Fecha_Historica::unionEventos(const Fecha_Historica &f1, const Fecha_Historica &f2, Fecha_Historica &u);
 
 
 /**
