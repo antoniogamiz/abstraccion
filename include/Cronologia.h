@@ -129,6 +129,13 @@ class Cronologia {
 
   void addEvento(Fecha_Historica& eh);
 
+
+  /**
+  * @brief Busca si un evento está repetido en la Cronología.
+  * @param evento evento que queremos saber si aparece más de una vez o no
+  * @return Devuelve true si está repetido, false si no lo está
+  */
+
   bool estaRepetido(string evento);
   
 

@@ -149,6 +149,14 @@ class Fecha_Historica {
 
   void addEvento(string& event);
 
+
+
+  /**
+  * @brief Busca si un evento está repetido en la Fecha_Historica.
+  * @param evento evento que queremos saber si aparece más de una vez o no
+  * @return Devuelve true si está repetido, false si no lo está
+  */
+
   bool estaRepetido(string evento);
 
 
