@@ -55,7 +55,7 @@ using namespace std;
 
 //Constructor con parámetro cadena de Fecha_Historica y número de objetos
   Cronologia::Cronologia(Fecha_Historica *eh, int n){
-     copiar(eh,n,n);
+     Copiar(eh,n,n);
   }
 
 //Constructor de copia
@@ -115,18 +115,58 @@ using namespace std;
     return anio_max;
   }
 
-//Devuelve si un año está repetido o no dentro de la Cronología
-  bool Cronologia::estaRepetido(int anio){
-    bool repetido= false;
 
-    for(int i= 0; i< neventos && !repetido; i++){
-      if(event[i].getAnio() == anio)
-        repetido= true;
+  void Cronologia::eliminaAniosRepetidos(){
+    ordenar();
+    for(int i= 0; i< neventos; i++){
+      if(event[i].getAnio() == event[i+1].getAnio()){
+        Fecha_Historica *aux = new Fecha_Historica [reservados];
+        for(int j= 0; j< i; j++)
+          aux[j]= event[j];
 
+        for(int j= i+1; j< neventos; j++)
+          aux[j] = event[j+1];
+
+        aux[i]->anio = event[i]-> anio;
+        aux[i]->str = new string [];
+
+      }
     }
-    return repetido;
   }
 
+  void Cronologia::union(const Cronologia& c1, const Cronologia& c2, Cronologia& u){
+    int i=0, j=0;
+    while(i< c1.neventos && j< c2.neventos){
+      if(c1.event[i].getAnio() < c2.event[j].getAnio()){
+        u.addEvento(c1.event[i]);
+        i++;
+      }
+
+      if(c1.event[i].getAnio() > c2.event[j].getAnio()){
+        u.addEvento(c2.event[j]);
+        j++;
+      }
+
+      if(c1.event[i].getAnio() == c2.event[j].getAnio()){
+        Fecha_Historica aux;
+
+        aux.setAnio(c1.event[i].getAnio());
+        aux.unionEventos(c1.event[i], c2.event[j], aux);
+        i++;
+        j++;
+      }
+    }
+
+    while(j< c2.neventos){
+      u.addEvento(c2.event[j]);
+      j++;
+    }
+
+    while(i< c1.neventos){
+      u.addEvento(c1.event[i]);
+      i++;
+    }
+  }
 
 
 //Busca un evento en la Cronología y devuelve su posición en el vector
