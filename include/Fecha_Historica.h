@@ -167,11 +167,12 @@ class Fecha_Historica {
 
 
   /**
-    * @brief Recorre un vector de string y si encuentra un elemento repetido lo elimina
+    * @brief Elimina los eventos repetidos en un vector
+    * @return vector de string sin elementos repetidos
     */
 
 
-  void Fecha_Historica::eliminaEventosRepetidos()
+  string* Fecha_Historica::eliminaEventosRepetidos()
 
 
   /**
@@ -179,7 +180,7 @@ class Fecha_Historica {
     * @param f1, f2 fechas históricas de las cuales se van a tomar los eventos
     * @return Devuelve un vector de string con los elementos de la unión de ambas fechas
     */
-    str* Fecha_Historica::unionEventos(Fecha_Historica f1, Fecha_Historica f2);
+    string* Fecha_Historica::unionEventos(Fecha_Historica f1, Fecha_Historica f2);
 
 
 /**
@@ -191,7 +192,6 @@ class Fecha_Historica {
 
 
   bool buscarEventos(string s, Fecha_Historica &matches);
-
 
 /**
   * @brief Salida de un Fecha_Historica a ostream
