@@ -97,25 +97,19 @@ using namespace std;
 
 
 //Elimina los eventos repetidos dentro de una Fecha
-  void Fecha_Historica::eliminaEventosRepetidos(){
-    for(int i=0; i< numeventos; i++){
-      if(estaRepetido(str[i])){
-        string *aux = new string [reservados];
-        for(int k= 0; k<i; k++)
-          aux[k]= str[k];
+  string* Fecha_Historica::eliminaEventosRepetidos(){
+    Fecha_Historica aux;
+    aux.anio = anio;
 
-        for(k=i; k< numeventos; k++)
-          aux[k]= str[k+1];
-
-        delete [] str;
-        str = aux;
-        numeventos--;
-      }
+    for(int i= 0; i< numeventos; i++){
+      if(! aux.estaRepetido(str[i]))
+        aux.addEvento(str[i]);
     }
+    return aux.str;
   }
 
 //Dadas dos fechas históricas une sus eventos sin que haya ningún elemento repetido
-    str* Fecha_Historica::unionEventos(Fecha_Historica f1, Fecha_Historica f2){
+    string* Fecha_Historica::unionEventos(Fecha_Historica f1, Fecha_Historica f2){
       Fecha_Historica u;
 
       for(int i= 0; i< f1.numeventos; i++){
@@ -179,3 +173,4 @@ using namespace std;
     return is;
 
   }
+
