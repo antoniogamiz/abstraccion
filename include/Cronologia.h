@@ -154,6 +154,20 @@ class Cronologia {
   bool estaRepetido(int anio);
 
 
+  /**
+    * @brief Recorre la Cronología y si hay una fecha que se repite crea otra con la unión de los eventos
+    */
+
+  void eliminaAniosRepetidos();
+
+
+  /**
+  * @brief Dadas dos cronologías las une en otra
+  * @param c1, c2 cronologías que se van a unir
+  * @param u cronología resultante de unirlas
+  */
+
+  void Cronologia::union(const Cronologia& c1, const Cronologia& c2, Cronologia& u)
 
   /**
   * @brief buscador de eventos dado una palabra clave
