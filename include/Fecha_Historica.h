@@ -74,13 +74,13 @@ class Fecha_Historica {
 
   string *str;        /**< vector de string de Eventos Historicos */
 
-  void Resize(int r); /**< Funcion privada para mantener el vector dinámico de string */
+  void resize(int r); /**< Funcion privada para mantener el vector dinámico de string */
 
-  void Copiar(int anios, string *eventos, int num_eventos);
+  void copiar(string *eventos, int reserv, int num_eventos);  /**< Funcion privada para copiar una fecha histórica en otra */
 
-  void ReservarMemoria(int tamanio);
+  void reservarMemoria(int tamanio);   /**< Funcion privada reservar memoria dinámica */
 
-  void LiberarMemoria();
+  void liberarMemoria();  /**< Funcion privada para liberar memoria dinámica */
 
 
  public:
@@ -100,20 +100,26 @@ class Fecha_Historica {
   * @param s vector de string con el evento o eventos de ese año
   * @param n número de eventos que contienen el vector s que se pasa como parámetro
   * @return Crea el evento con año a y n eventos asociados
-  * @pre a debe ser mayor o igual que 0 y menos o igual que 9999, n debe ser un número positivo
+  * @pre a debe ser mayor o igual que 0 y menor o igual que 9999, n debe ser un número positivo
   * igual al número de eventos contenidos en el vector de string s
   */
 
   Fecha_Historica(int a, string *s, int n);
 
 /**
-  * @brief Constructor de copias de la clase
+  * @brief Constructor de copia de la clase
   * @param e objeto de la clase que se quiere copiar
   * @return Crea el evento con los datos de e
   */
 
   Fecha_Historica(const Fecha_Historica& e);
 
+
+  /**
+    * @brief Operador de asignación de la clase
+    * @param e objeto de la clase que se quiere copiar
+    * @return Crea el evento con los datos de e
+    */
 
   Fecha_Historica& operator=(const Fecha_Historica& e);
 
@@ -122,7 +128,7 @@ class Fecha_Historica {
   */
 
   ~Fecha_Historica(){
-    LiberarMemoria();
+    liberarMemoria();
   }
 
 
@@ -131,7 +137,7 @@ class Fecha_Historica {
   * @return int con el valor del campo anio
   */
 
-  int GetAnio ();
+  int getAnio ();
 
 
   /**
@@ -139,7 +145,7 @@ class Fecha_Historica {
     * @return int con el valor del campo numeventos
     */
 
-    int GetNumEventos ();
+    int getNumEventos ();
 
 
 
@@ -148,7 +154,7 @@ class Fecha_Historica {
   * @param event string con evento a añadir
   */
 
-  void AddEvento(string& event);
+  void addEvento(string& event);
 
 
 /**
@@ -167,14 +173,13 @@ class Fecha_Historica {
     * @param event string con el evento a buscar
     * @return Devuelve true o false indicando si está o no repetido
     */
-  bool EstaRepetido(string event);
+  bool estaRepetido(string event);
 
   /**
     * @brief Recorre los eventos y si hay uno repetido lo elimina
-    * @return No devuelve nada.
     */
 
-  void EliminaEventosRepetidos();
+  void eliminaEventosRepetidos();
 
 /**
   * @brief Salida de un Fecha_Historica a ostream
