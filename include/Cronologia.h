@@ -76,9 +76,7 @@ class Cronologia {
 
   void resize(int r);         /**< Función privada para mantener el vector dinámico de string */
   void ordenar();             /**< Función privada para ordener los eventos según la fecha */
-  void liberarMemoria();
-  void copiar(Fecha_Historica *f, int reserv, int eventos);
-  void reservarMemoria(int reserv);
+
 
  public:
 
@@ -120,9 +118,7 @@ class Cronologia {
   * @brief Destructor de la clase. Hace un delete del vector de Fecha_Historica
   */
 
-  ~Cronologia(){
-     liberarMemoria();
-  }
+  ~Cronologia();
 
 /**
   * @brief Añade un Evento Histórico  en la Cronología

@@ -76,11 +76,6 @@ class Fecha_Historica {
 
   void resize(int r); /**< Funcion privada para mantener el vector dinámico de string */
 
-  void copiar(string *eventos, int reserv, int num_eventos);  /**< Funcion privada para copiar una fecha histórica en otra */
-
-  void reservarMemoria(int tamanio);   /**< Funcion privada reservar memoria dinámica */
-
-  void liberarMemoria();  /**< Funcion privada para liberar memoria dinámica */
 
 
  public:
@@ -127,9 +122,7 @@ class Fecha_Historica {
   * @brief Destructor de la clase. Hace un delete del vector de string
   */
 
-  ~Fecha_Historica(){
-    liberarMemoria();
-  }
+  ~Fecha_Historica();
 
 
 /**
