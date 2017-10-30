@@ -68,11 +68,11 @@ using namespace std;
     return anio;
    }
 
+
 //Método de acceso al número de eventos acaecidos en un año
   int Fecha_Historica::getNumEventos(){
     return numeventos;
   }
-
 
 //Añade un evento
   void Fecha_Historica::addEvento(string &event){
@@ -109,9 +109,7 @@ using namespace std;
   }
 
 //Dadas dos fechas históricas une sus eventos sin que haya ningún elemento repetido
-    string* Fecha_Historica::unionEventos(Fecha_Historica f1, Fecha_Historica f2){
-      Fecha_Historica u;
-
+    void Fecha_Historica::unionEventos(const Fecha_Historica &f1, const Fecha_Historica &f2, Fecha_Historica &u ){
       for(int i= 0; i< f1.numeventos; i++){
         if(! u.estaRepetido(f1.str[i]))
           u.addEvento(f1.str[i]);
@@ -121,9 +119,7 @@ using namespace std;
         if(! u.estaRepetido(f2.str[i]))
           u.addEvento(f2.str[i]);
       }
-      return u.str;
     }
-
 
 //Buscador de eventos
   bool Fecha_Historica::buscarEventos(string s, Fecha_Historica &matches){
@@ -173,4 +169,3 @@ using namespace std;
     return is;
 
   }
-
