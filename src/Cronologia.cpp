@@ -55,7 +55,7 @@ using namespace std;
 
 //Constructor con parámetro cadena de Fecha_Historica y número de objetos
   Cronologia::Cronologia(Fecha_Historica *eh, int n){
-     Copiar(eh,n,n);
+     copiar(eh,n,n);
   }
 
 //Constructor de copia
@@ -127,23 +127,6 @@ using namespace std;
     return repetido;
   }
 
-  void Cronologia::eliminaAniosRepetidos(){
-    ordenar();
-    for(int i= 0; i< neventos; i++){
-      if(estaRepetido(event[i].getAnio())){
-        Fecha_Historica *aux = new Fecha_Historica [reservados];
-        for(int j= 0; j< i; j++)
-          aux[j]= event[j];
-
-        for(int j= i+1; j< neventos; j++)
-          aux[j] = event[j+1];
-
-        aux[i]->anio = event[i]-> anio;
-        aux[i]->str = new string [];
-
-      }
-    }
-  }
 
 
 //Busca un evento en la Cronología y devuelve su posición en el vector

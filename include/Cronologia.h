@@ -154,13 +154,6 @@ class Cronologia {
   bool estaRepetido(int anio);
 
 
-  /**
-    * @brief Recorre la Cronología y si hay una fecha que se repite crea otra con la unión de los eventos
-    */
-
-  void eliminaAniosRepetidos();
-
-
 
   /**
   * @brief buscador de eventos dado una palabra clave
@@ -176,11 +169,6 @@ class Cronologia {
   */
 
   int maxNumEvents();
-
-
-
-  Cronologia buscarEventos(string s);
-
 
 
 /**

@@ -173,13 +173,10 @@ class Fecha_Historica {
     * @param event string con el evento a buscar
     * @return Devuelve true o false indicando si está o no repetido
     */
-  bool estaRepetido(string event);
 
   /**
     * @brief Recorre los eventos y si hay uno repetido lo elimina
     */
-
-  void eliminaEventosRepetidos();
 
 /**
   * @brief Salida de un Fecha_Historica a ostream
