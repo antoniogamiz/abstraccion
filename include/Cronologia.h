@@ -76,9 +76,7 @@ class Cronologia {
 
   void resize(int r);         /**< Función privada para mantener el vector dinámico de string */
   void ordenar();             /**< Función privada para ordener los eventos según la fecha */
-  void liberarMemoria();
-  void copiar(Fecha_Historica *f, int reserv, int eventos);
-  void reservarMemoria(int reserv);
+
 
  public:
 
@@ -120,9 +118,7 @@ class Cronologia {
   * @brief Destructor de la clase. Hace un delete del vector de Fecha_Historica
   */
 
-  ~Cronologia(){
-     liberarMemoria();
-  }
+  ~Cronologia();
 
 /**
   * @brief Añade un Evento Histórico  en la Cronología
@@ -133,6 +129,33 @@ class Cronologia {
 
   void addEvento(Fecha_Historica& eh);
 
+
+  /**
+  * @brief Busca si un evento está repetido en la Cronología.
+  * @param evento evento que queremos saber si aparece más de una vez o no
+  * @return Devuelve true si está repetido, false si no lo está
+  */
+
+  bool estaRepetido(string evento);
+
+
+  /**
+  * @brief Dadas dos cronologías las une en otra
+  * @param c cronología que se va a unir a la que invoca a la función
+  * @param u cronología resultante de unirlas
+  */
+
+  void unionCronologias(const Cronologia& c, Cronologia& u);
+
+
+
+  /**
+    * @brief Devuelve los eventos ocurridos en un año
+    * @param a año del que se quieren saber los eventos
+    * @return string* vector de string con los eventos
+    */
+
+    string* getEventos(int a);
 
 
 /**
@@ -154,20 +177,6 @@ class Cronologia {
   bool estaRepetido(int anio);
 
 
-  /**
-    * @brief Recorre la Cronología y si hay una fecha que se repite crea otra con la unión de los eventos
-    */
-
-  void eliminaAniosRepetidos();
-
-
-  /**
-  * @brief Dadas dos cronologías las une en otra
-  * @param c1, c2 cronologías que se van a unir
-  * @param u cronología resultante de unirlas
-  */
-
-  void Cronologia::union(const Cronologia& c1, const Cronologia& c2, Cronologia& u)
 
   /**
   * @brief buscador de eventos dado una palabra clave
@@ -183,6 +192,15 @@ class Cronologia {
   */
 
   int maxNumEvents();
+
+
+
+  /**
+  * @brief Busca el año que menor número de eventos ha tenido
+  * @return Año con con menor número de eventos
+  */
+
+  int minNumEvents();
 
 
 /**
