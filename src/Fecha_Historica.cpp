@@ -16,8 +16,6 @@ using namespace std;
      reservados = r;
   }
 
-
-
 //Constructor vacío
   Fecha_Historica::Fecha_Historica():anio(0),reservados(0),numeventos(0),str(0){}
 
@@ -36,6 +34,7 @@ using namespace std;
     *this=e;
    }
 
+//Operador de asignación
    Fecha_Historica& Fecha_Historica::operator=(const Fecha_Historica &e){
       if(this != &e)
       str = new string[e.reservados];
@@ -47,7 +46,7 @@ using namespace std;
        return *this;
    }
 
-
+//Destructor
    Fecha_Historica::~Fecha_Historica(){
     anio=0;
     numeventos=0;
@@ -60,8 +59,10 @@ using namespace std;
     return anio;
    }
 
+//Establecemos año como un valor pasado como parámetro
    void Fecha_Historica::setAnio(int a){
-    anio=a;
+    assert(a>=0 && a<= 9999);
+     anio=a;
    }
 
 //Método de acceso al número de eventos acaecidos en un año
@@ -82,6 +83,7 @@ using namespace std;
      numeventos++;
   }
 
+//Dado un evento busca si está en los de la fecha histórica
   bool Fecha_Historica::estaRepetido(string evento){
     bool repetido=false;
     for(int i= 0; i< numeventos && !repetido; i++){
@@ -96,7 +98,7 @@ using namespace std;
     return str;
   }
 
-
+//Dadas dos fechas históricas crea otra con la unión ordenada y sin eventos repetidos de ambas
   void Fecha_Historica::unionEventos(const Fecha_Historica &f1, const Fecha_Historica &f2, Fecha_Historica &u ){
     for(int i= 0; i< f1.numeventos; i++){
       if(! u.estaRepetido(f1.str[i]))
@@ -106,6 +108,22 @@ using namespace std;
     for(int i= 0; i< f2.numeventos; i++){
       if(! u.estaRepetido(f2.str[i]))
         u.addEvento(f2.str[i]);
+    }
+  }
+
+//Dadas dos fechas históricas crea una con los eventos que ambas tienen en común
+void Fecha_Historica::interseccionEventos(Fecha_Historica f, Fecha_Historica &i){
+    if(numeventos < f.numeventos){
+      for(int j= 0; j< numeventos; j++){
+        if(f.estaRepetido(str[j]) && ! i.estaRepetido(str[j]))
+          i.addEvento(str[j]);
+      }
+    }
+    else{
+      for(int j= 0; j< f.numeventos; j++){
+        if(estaRepetido(f.str[j]) && ! i.estaRepetido(f.str[j]))
+          i.addEvento(f.str[j]);
+      }
     }
   }
 
