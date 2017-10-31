@@ -28,35 +28,16 @@ using namespace std;
          }
   }
 
-  void Cronologia::liberarMemoria(){
-    neventos=reservados=0;
-    delete [] event;
-  }
 
-  void Cronologia::reservarMemoria(int reserv){
-    if(reserv>0){
-      reservados=reserv;
-      Fecha_Historica *event = new Fecha_Historica [reserv];
-    }
-    else
-      reservados=0;
-  }
-
-  void Cronologia::copiar(Fecha_Historica *f, int reserv, int eventos){
-    reservarMemoria(reserv);
-    neventos=eventos;
-    for(int i= 0; i< eventos; i++)
-      event[i]=f[i];
-  }
+  Cronologia::Cronologia(Fecha_Historica *eh, int n):reservados(n),neventos(n){
+    Fecha_Historica *event = new Fecha_Historica[n];
+    for (int i=0; i<n; i++)
+       event[i]=eh[i];
+ }
 
 //Constructor vacío
   Cronologia::Cronologia():reservados(0),neventos(0),event(0){}
 
-
-//Constructor con parámetro cadena de Fecha_Historica y número de objetos
-  Cronologia::Cronologia(Fecha_Historica *eh, int n){
-     Copiar(eh,n,n);
-  }
 
 //Constructor de copia
    Cronologia::Cronologia(const Cronologia& c){
@@ -65,11 +46,18 @@ using namespace std;
 
 
   Cronologia& Cronologia::operator=(const Cronologia& c){
-    if(this != &c){
-      liberarMemoria();
-      copiar(c.event, c.reservados, c.neventos);
-    }
+    neventos=c.neventos;
+    reservados=c.reservados;
+    event = new Fecha_Historica[reservados];
+    for(int i=0; i<neventos; i++)
+      event[i]=c.event[i];
     return *this;
+  }
+
+  Cronologia::~Cronologia(){
+    neventos=0;
+    reservados=0;
+    delete[] event;
   }
 
 //Añade objeto de Fecha_Historica
@@ -84,6 +72,20 @@ using namespace std;
      neventos++;
      ordenar();
   }
+
+  bool Cronologia::estaRepetido(string evento){
+    bool repetida=false;
+    for(int i=0; i<neventos && !repetida; i++)
+      repetida=event[i].estaRepetido(evento);
+    return repetida;
+  }
+
+  //Dado un año devolvemos los eventos que se dieron en él
+    string* Cronologia::getEventos(int a){
+      int posicion_anio = buscarAnio(a);
+
+        return event[posicion_anio].getEventos();
+    }
 
 
 //Busca un año en la Cronología y devuelve si dicho año está en la cronología o no.
@@ -109,64 +111,73 @@ using namespace std;
     for(int i=1; i< neventos; i++){
       if(event[i].getNumEventos() > max){
         max= event[i].getNumEventos();
-        anio_max= event[0].getAnio();
+        anio_max= event[i].getAnio();
       }
     }
     return anio_max;
   }
 
-
-  void Cronologia::eliminaAniosRepetidos(){
-    ordenar();
-    for(int i= 0; i< neventos; i++){
-      if(event[i].getAnio() == event[i+1].getAnio()){
-        Fecha_Historica *aux = new Fecha_Historica [reservados];
-        for(int j= 0; j< i; j++)
-          aux[j]= event[j];
-
-        for(int j= i+1; j< neventos; j++)
-          aux[j] = event[j+1];
-
-        aux[i]->anio = event[i]-> anio;
-        aux[i]->str = new string [];
-
-      }
-    }
-  }
-
-  void Cronologia::union(const Cronologia& c1, const Cronologia& c2, Cronologia& u){
+  void Cronologia::unionCronologias(const Cronologia& c, Cronologia& u){
     int i=0, j=0;
-    while(i< c1.neventos && j< c2.neventos){
-      if(c1.event[i].getAnio() < c2.event[j].getAnio()){
-        u.addEvento(c1.event[i]);
+    while(i< neventos && j< c.neventos){
+      if(event[i].getAnio() < c.event[j].getAnio()){
+        u.addEvento(event[i]);
         i++;
       }
 
-      if(c1.event[i].getAnio() > c2.event[j].getAnio()){
-        u.addEvento(c2.event[j]);
+      if(event[i].getAnio() > c.event[j].getAnio()){
+        u.addEvento(c.event[j]);
         j++;
       }
 
-      if(c1.event[i].getAnio() == c2.event[j].getAnio()){
+      if(event[i].getAnio() == c.event[j].getAnio()){
         Fecha_Historica aux;
 
-        aux.setAnio(c1.event[i].getAnio());
-        aux.unionEventos(c1.event[i], c2.event[j], aux);
+        aux.setAnio(event[i].getAnio());
+        aux.unionEventos(event[i], c.event[j], aux);
+        u.addEvento(aux);
         i++;
         j++;
       }
     }
 
-    while(j< c2.neventos){
-      u.addEvento(c2.event[j]);
+    while(j< c.neventos){
+      u.addEvento(c.event[j]);
       j++;
     }
 
-    while(i< c1.neventos){
-      u.addEvento(c1.event[i]);
+    while(i< neventos){
+      u.addEvento(event[i]);
       i++;
     }
   }
+
+  //Devuelve el año en el que ha habido un menor número de eventos
+    int Cronologia::minNumEvents(){
+      int min= event[0].getNumEventos();
+      int anio_min= event[0].getAnio();
+
+      for(int i=1; i< neventos; i++){
+        if(event[i].getNumEventos() < min){
+          min= event[i].getNumEventos();
+          anio_min= event[i].getAnio();
+        }
+      }
+      return anio_min;
+    }
+
+//Devuelve si un año está o no dentro de la Cronología
+  bool Cronologia::estaRepetido(int anio){
+    bool repetido= false;
+
+    for(int i= 0; i< neventos && !repetido; i++){
+      if(event[i].getAnio() == anio)
+        repetido= true;
+
+    }
+    return repetido;
+  }
+
 
 
 //Busca un evento en la Cronología y devuelve su posición en el vector
