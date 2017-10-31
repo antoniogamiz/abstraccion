@@ -86,3 +86,4 @@ int main(int argc, char * argv[]){
     //cout << "\nEl mínimo número de eventos de " << argv[2] << " tuvo lugar en el año: " << cron2.minNumEvents();
 
 }
+
