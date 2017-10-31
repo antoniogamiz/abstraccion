@@ -26,7 +26,7 @@ using namespace std;
   Fecha_Historica::Fecha_Historica(int a, string *s, int n){
      assert(a >= 0 && a<= 9999);
      anio = a;
-     string *str = new string[n];   
+     string *str = new string[n];
      for (int i=0; i<n; i++)
         str[i]=s[i];
   }
@@ -90,13 +90,20 @@ using namespace std;
     }
     return repetido;
   }
+
+//Método de acceso a los eventos ocurridos en la Fecha_Historica
+  string* Fecha_Historica::getEventos(){
+    return str;
+  }
+
+
   void Fecha_Historica::unionEventos(const Fecha_Historica &f1, const Fecha_Historica &f2, Fecha_Historica &u ){
     for(int i= 0; i< f1.numeventos; i++){
       if(! u.estaRepetido(f1.str[i]))
         u.addEvento(f1.str[i]);
     }
 
-    for(int i= 0; i< f1.numeventos; i++){
+    for(int i= 0; i< f2.numeventos; i++){
       if(! u.estaRepetido(f2.str[i]))
         u.addEvento(f2.str[i]);
     }
@@ -148,4 +155,5 @@ using namespace std;
         getline(ss, e.str[i], '#');
     return is;
 
-  }
+}
+
