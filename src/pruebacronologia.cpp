@@ -1,8 +1,8 @@
 ///////////////////////////////////////////////////////////////////////
 //
-// PRACTICA 2 DE ESTRUCTURA DE DATOS.
+// PRÁCTICA 2 DE ESTRUCTURA DE DATOS.
 //
-// AUTORES: ELENA MERELO MOLINA Y ANTONI GAMIZ DELGADO.
+// AUTORES: ELENA MERELO MOLINA Y ANTONIO GÁMIZ DELGADO.
 //
 ///////////////////////////////////////////////////////////////////////
 #include "Cronologia.h"
@@ -70,7 +70,7 @@ int main(int argc, char * argv[]){
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
-   //Probramos la funcion Cronologia::buscarEventoEntre(int anio1, int anio2);
+   //Probamos la funcion Cronologia::buscarEventoEntre(int anio1, int anio2);
    
    cout << "Introduzca dos años entre los que quiere ver los eventos de la cronología 1: " << endl;
    int anio1=0; int anio2=0;
@@ -90,15 +90,16 @@ int main(int argc, char * argv[]){
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
-  //Intersecamos las dos cronologías y mostramos por pantalla el resultado.
+  //Intersectamos las dos cronologías y mostramos por pantalla el resultado.
 
-  //Cronologia unionInter;
-
-    //cout << "Cronología resultante de intersecar: " << argv[1] << " con " << argv[2] << " :" << endl << unionInter << endl;
+  Cronologia inter;
+  cron1.interseccionCronologias(cron2, inter); 
+  
+  cout << "Cronología resultante de intersectar: " << argv[1] << " con " << argv[2] << " :" << endl << inter << endl;
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
-    cout << "Probamos que funciona GetEventos: " << endl;
+    cout << "Probamos que funciona getEventos: " << endl;
     cout << cron2.getEventos(2018) << endl;
 
 /////////////////////////////////////////////////////////////////////////////////////////
