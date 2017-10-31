@@ -1,217 +1,159 @@
-/**
-  * @file Fecha_Historica.h
-  * @brief Fichero cabecera del TDA Fecha_Historica
-  *
-  */
-
-#ifndef _FECHA_HISTORICA_
-#define _FECHA_HISTORICA_
-
 #include <iostream>
-#include <string>
-#include <cassert>
+#include<sstream>
+#include<string>
+#include "Fecha_Historica.h"
 
 using namespace std;
 
-/**
-  *  @brief T.D.A. Fecha_Historica
-  *
-  * Una instancia @e c del tipo de datos abstracto @c Fecha_Historica es un objeto
-  * con cuatro campos, tres enteros y un vector de string
-  * Uno de los enteros es la fecha base del conjunto de eventos y los otros dos son la base del
-  * vector dinamico que representamos como
-  *
-  * Año
-  * num_eventos
-  * evento/s:
-  * *)Fecha_Historica_1
-  * ...
-  * ...
-  * *)Fecha_Historica_N
-  *
-  * Un ejemplo de su uso:
-  * @include pruebacronologia.cpp
-  *
-  * @author
-  * @author
-  * @date
-  */
-
-class Fecha_Historica {
-
- private:
-/**
-  * @page repConjunto Rep del TDA Fecha_Historica
-  *
-  * @section invConjunto Invariante de la representación
-  *
-  * El invariante es \e rep.anio > 0 && rep.anio < 9999
-  *
-  * Fijamos como limite que los años no sean ni negativos ni superiores a 9999.
-  * Tratamos años antes o después de Cristo con un booleano
-  *
-  * @section faConjunto Función de abstracción
-  *
-  * Un objeto válido @e rep del TDA Fecha_Historica representa al valor
-  *
-  * Año
-  * num_eventos
-  * evento/s:
-  * *)Fecha_Historica_1
-  * ...
-  * ...
-  * *)Fecha_Historica_N
-  *
-  *
-  */
-
-
-  int anio;           /**< Año */
-
-  int numeventos;       /**< número de Eventos Historicos almacenados para ese Año */
-
-  int reservados;     /**< número de elementos reservados */
-
-  string *str;        /**< vector de string de Eventos Historicos */
-
-  void resize(int r); /**< Funcion privada para mantener el vector dinámico de string */
-
-  void copiar(string *eventos, int reserv, int num_eventos);  /**< Funcion privada para copiar una fecha histórica en otra */
-
-  void reservarMemoria(int tamanio);   /**< Funcion privada reservar memoria dinámica */
-
-  void liberarMemoria();  /**< Funcion privada para liberar memoria dinámica */
-
-
- public:
-
-/**
-  * @brief Constructor por defecto de la clase. Lo creamos sencillamente para evitar
-  * errores o asignaciones de basura a objetos de nuestra clase. Crea una Fecha Historica
-  * por defecto con año 0, con el vector nulo y 0 numeventos y reservados
-  */
-
-  Fecha_Historica();
-
-
-/**
-  * @brief Constructor de la clase
-  * @param a año del evento a construir
-  * @param s vector de string con el evento o eventos de ese año
-  * @param n número de eventos que contienen el vector s que se pasa como parámetro
-  * @return Crea el evento con año a y n eventos asociados
-  * @pre a debe ser mayor o igual que 0 y menor o igual que 9999, n debe ser un número positivo
-  * igual al número de eventos contenidos en el vector de string s
-  */
-
-  Fecha_Historica(int a, string *s, int n);
-
-/**
-  * @brief Constructor de copia de la clase
-  * @param e objeto de la clase que se quiere copiar
-  * @return Crea el evento con los datos de e
-  */
-
-  Fecha_Historica(const Fecha_Historica& e);
-
-
-  /**
-    * @brief Operador de asignación de la clase
-    * @param e objeto de la clase que se quiere copiar
-    * @return Crea el evento con los datos de e
-    */
-
-  Fecha_Historica& operator=(const Fecha_Historica& e);
-
-/**
-  * @brief Destructor de la clase. Hace un delete del vector de string
-  */
-
-  ~Fecha_Historica(){
-    liberarMemoria();
+//Resize simple
+  void Fecha_Historica::resize(int r){
+     string *aux = new string[r];
+     for(int i=0; i<numeventos; ++i){
+        aux[i]=str[i];
+     }
+     delete[] str;
+     str = aux;
+     reservados = r;
   }
 
 
-/**
-  * @brief Método de acceso al año de la Fecha_Historica
-  * @return int con el valor del campo anio
-  */
 
-  int getAnio();
+//Constructor vacío
+  Fecha_Historica::Fecha_Historica():anio(0),reservados(0),numeventos(0),str(0){}
 
 
-  /**
-    * @brief Método de acceso al número de eventos de la Fecha_Historica
-    * @return int con el valor del campo numeventos
-    */
+//Constructor con parametros año, cadena de eventos y número de eventos a añadir
+  Fecha_Historica::Fecha_Historica(int a, string *s, int n){
+     assert(a >= 0 && a<= 9999);
+     anio = a;
+     string *str = new string[n];
+     for (int i=0; i<n; i++)
+        str[i]=s[i];
+  }
 
-    int getNumEventos();
+//Constructor de copia
+   Fecha_Historica::Fecha_Historica(const Fecha_Historica &e){
+    *this=e;
+   }
 
-
-
-/**
-  * @brief Añade un evento
-  * @param event string con evento a añadir
-  */
-
-  void addEvento(string& event);
-
-
-  /**
-    * @brief Comprueba si un evento está repetido dentro del vector de eventos de una fecha histórica
-    * @param evento que se quiere ver si está repetido
-    * @return Devuelve true si está repetido, false si no
-    */
-
-  bool Fecha_Historica::estaRepetido(string evento);
-
-
-  /**
-    * @brief Elimina los eventos repetidos en un vector
-    * @return vector de string sin elementos repetidos
-    */
+   Fecha_Historica& Fecha_Historica::operator=(const Fecha_Historica &e){
+      if(this != &e)
+      str = new string[e.reservados];
+      anio=e.anio;
+      numeventos = e.numeventos;
+      reservados = e.numeventos;
+      for(int i=0; i<numeventos; ++i)
+        str[i] = e.str[i];
+       return *this;
+   }
 
 
-  string* Fecha_Historica::eliminaEventosRepetidos()
+   Fecha_Historica::~Fecha_Historica(){
+    anio=0;
+    numeventos=0;
+    reservados=0;
+    delete[] str;
+   }
+
+//Método de acceso a año
+   int Fecha_Historica::getAnio(){
+    return anio;
+   }
+
+   void Fecha_Historica::setAnio(int a){
+    anio=a;
+   }
+
+//Método de acceso al número de eventos acaecidos en un año
+  int Fecha_Historica::getNumEventos(){
+    return numeventos;
+  }
 
 
-  /**
-    * @brief Unión de eventos de dos fechas históricas
-    * @param f1, f2 fechas históricas de las cuales se van a tomar los eventos
-    * @param num_events número de eventos que hay en la unión
-    */
-    void Fecha_Historica::unionEventos(const Fecha_Historica &f1, const Fecha_Historica &f2, Fecha_Historica &u);
+//Añade un evento
+  void Fecha_Historica::addEvento(string &event){
+     if (numeventos == reservados){
+        if (numeventos==0)
+           resize(1);
+        else
+          resize(2*reservados);
+     }
+     str[numeventos]=event;
+     numeventos++;
+  }
+
+  bool Fecha_Historica::estaRepetido(string evento){
+    bool repetido=false;
+    for(int i= 0; i< numeventos && !repetido; i++){
+      if(evento.compare(str[i]) == 0)
+        repetido=true;
+    }
+    return repetido;
+  }
+
+//Método de acceso a los eventos ocurridos en la Fecha_Historica
+  string* Fecha_Historica::getEventos(){
+    return str;
+  }
 
 
-/**
-  * @brief Búsqueda de eventos en una Fecha_Historica dada una palabra clave s
-  * @param s string con la palabra a buscar
-  * @param matches nueva Fecha_Historica donde se introducen únicamente los eventos de this que contienen el string s
-  * @return Devuelve true o false indicando si hay o no algún match de la cadena clave s en los eventos de this
-  */
+  void Fecha_Historica::unionEventos(const Fecha_Historica &f1, const Fecha_Historica &f2, Fecha_Historica &u ){
+    for(int i= 0; i< f1.numeventos; i++){
+      if(! u.estaRepetido(f1.str[i]))
+        u.addEvento(f1.str[i]);
+    }
 
+    for(int i= 0; i< f2.numeventos; i++){
+      if(! u.estaRepetido(f2.str[i]))
+        u.addEvento(f2.str[i]);
+    }
+  }
 
-  bool buscarEventos(string s, Fecha_Historica &matches);
+//Buscador de eventos
+  bool Fecha_Historica::buscarEventos(string s, Fecha_Historica &matches){
+     bool encontrado=false;
+     for (int i=0; i < numeventos; ++i){
+        if(str[i].find(s) != -1 ){
+           matches.addEvento(str[i]);
+           encontrado = true;
+        }
+     }
+     if (encontrado){
+        matches.anio=anio;
+      }
+    return encontrado;
+   }
 
-/**
-  * @brief Salida de un Fecha_Historica a ostream
-  * @param os stream de salida
-  * @param e Fecha_Historica a escribir
-  * @post Se muestra la Fecha_Historica en formato "año#evento1#evento2#...#eventoN"
-  */
+//Operador <<
+  ostream& operator<< (ostream& os, const Fecha_Historica& e){
+    os << e.anio;
+    for(int i=0; i<e.numeventos; i++)
+        os << '#' << e.str[i];
+    os << endl;
+    return os;
+  }
 
-  friend ostream& operator<< (ostream& os, const Fecha_Historica& e);
+//Operador >>
+  istream& operator>> (istream& is, Fecha_Historica& e){
+    string line; char c;
+    is >> e.anio >> c;
+    getline(is, line);
 
-/**
-  * @brief Entrada de un Fecha_Historica desde istream
-  * @param is stream de entrada
-  * @param e Fecha_Historica que recibe el valor
-  * @retval El Fecha_Historica leído en e
-  * @pre La entrada tiene el formato "año#evento1#evento2#...#eventoN
-  */
+    int n=1;
+    for(int i=0; i<line.length(); i++)
+        if(line[i]=='#')
+            n++;
 
-  friend istream& operator>> (istream& is, Fecha_Historica& e);
+    e.numeventos=n;
+    e.reservados=e.numeventos;
+    delete[] e.str;
+    e.str=new string[n];
 
-};
+    stringstream ss(line);
 
-#endif
+    for(int i=0; i<n; i++)
+        getline(ss, e.str[i], '#');
+    return is;
+
+}
+
