@@ -1,5 +1,6 @@
 #include <iostream>
 #include<sstream>
+#include<string>
 #include "Fecha_Historica.h"
 
 using namespace std;
@@ -15,26 +16,7 @@ using namespace std;
      reservados = r;
   }
 
-  void Fecha_Historica::reservarMemoria(int n){
-    assert(n>0);
-    reservados=n;
-    string *str = new string [n];
-  }
 
-//Método que libera memoria dinámica
-  void Fecha_Historica::liberarMemoria(){
-    anio=numeventos=reservados=0;
-    delete [] str;
-  }
-
-//Método que copia una fecha histórica
-  void Fecha_Historica::copiar(string *s, int reserv, int num_events){
-    assert(reserv >= num_events);
-    reservarMemoria(reserv);
-    numeventos=num_events;
-    for(int i=0; i<num_events; i++)
-      str[i]=s[i];
-  }
 
 //Constructor vacío
   Fecha_Historica::Fecha_Historica():anio(0),reservados(0),numeventos(0),str(0){}
@@ -44,8 +26,9 @@ using namespace std;
   Fecha_Historica::Fecha_Historica(int a, string *s, int n){
      assert(a >= 0 && a<= 9999);
      anio = a;
-     reservarMemoria(n);
-     copiar(s,n,n);
+     string *str = new string[n];
+     for (int i=0; i<n; i++)
+        str[i]=s[i];
   }
 
 //Constructor de copia
@@ -54,25 +37,38 @@ using namespace std;
    }
 
    Fecha_Historica& Fecha_Historica::operator=(const Fecha_Historica &e){
-       if(this != &e){
-         liberarMemoria();
-         anio=e.anio;
-         copiar(e.str,e.reservados,e.numeventos);
-       }
+      if(this != &e)
+      str = new string[e.reservados];
+      anio=e.anio;
+      numeventos = e.numeventos;
+      reservados = e.numeventos;
+      for(int i=0; i<numeventos; ++i)
+        str[i] = e.str[i];
        return *this;
    }
 
+
+   Fecha_Historica::~Fecha_Historica(){
+    anio=0;
+    numeventos=0;
+    reservados=0;
+    delete[] str;
+   }
 
 //Método de acceso a año
    int Fecha_Historica::getAnio(){
     return anio;
    }
 
+   void Fecha_Historica::setAnio(int a){
+    anio=a;
+   }
 
 //Método de acceso al número de eventos acaecidos en un año
   int Fecha_Historica::getNumEventos(){
     return numeventos;
   }
+
 
 //Añade un evento
   void Fecha_Historica::addEvento(string &event){
@@ -95,31 +91,23 @@ using namespace std;
     return repetido;
   }
 
-
-//Elimina los eventos repetidos dentro de una Fecha
-  string* Fecha_Historica::eliminaEventosRepetidos(){
-    Fecha_Historica aux;
-    aux.anio = anio;
-
-    for(int i= 0; i< numeventos; i++){
-      if(! aux.estaRepetido(str[i]))
-        aux.addEvento(str[i]);
-    }
-    return aux.str;
+//Método de acceso a los eventos ocurridos en la Fecha_Historica
+  string* Fecha_Historica::getEventos(){
+    return str;
   }
 
-//Dadas dos fechas históricas une sus eventos sin que haya ningún elemento repetido
-    void Fecha_Historica::unionEventos(const Fecha_Historica &f1, const Fecha_Historica &f2, Fecha_Historica &u ){
-      for(int i= 0; i< f1.numeventos; i++){
-        if(! u.estaRepetido(f1.str[i]))
-          u.addEvento(f1.str[i]);
-      }
 
-      for(int i= 0; i< f1.numeventos; i++){
-        if(! u.estaRepetido(f2.str[i]))
-          u.addEvento(f2.str[i]);
-      }
+  void Fecha_Historica::unionEventos(const Fecha_Historica &f1, const Fecha_Historica &f2, Fecha_Historica &u ){
+    for(int i= 0; i< f1.numeventos; i++){
+      if(! u.estaRepetido(f1.str[i]))
+        u.addEvento(f1.str[i]);
     }
+
+    for(int i= 0; i< f2.numeventos; i++){
+      if(! u.estaRepetido(f2.str[i]))
+        u.addEvento(f2.str[i]);
+    }
+  }
 
 //Buscador de eventos
   bool Fecha_Historica::buscarEventos(string s, Fecha_Historica &matches){
@@ -159,7 +147,6 @@ using namespace std;
     e.numeventos=n;
     e.reservados=e.numeventos;
     delete[] e.str;
-    e.str=NULL;
     e.str=new string[n];
 
     stringstream ss(line);
@@ -168,4 +155,4 @@ using namespace std;
         getline(ss, e.str[i], '#');
     return is;
 
-  }
+}
