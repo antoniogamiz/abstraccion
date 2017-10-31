@@ -32,9 +32,9 @@ using namespace std;
   * Un ejemplo de su uso:
   * @include pruebacronologia.cpp
   *
-  * @author
-  * @author
-  * @date
+  * @author Elena Merelo Molina
+  * @author Antonio Gámiz Delgado
+  * @date 31 de octubre de 2017
   */
 
 class Fecha_Historica {
@@ -136,7 +136,7 @@ class Fecha_Historica {
 
   /**
     * @brief Método de establecimiento del año de la Fecha_Historica
-    * @param a año de la Fecha_Historica
+    * @param a año de la Fecha_Historica con el que queremos inicializar la variable privada anio
     */
 
 
@@ -158,7 +158,7 @@ class Fecha_Historica {
     * @return int con el valor del campo numeventos
     */
 
-    int getNumEventos ();
+    int getNumEventos();
 
 
 
@@ -181,29 +181,33 @@ class Fecha_Historica {
 
 
 
-
-
-
 /**
-  * @brief Búsqueda de eventos en una Fecha_Historica dada una palabra clave s
-  * @param s string con la palabra a buscar
-  * @param matches nueva Fecha_Historica donde se introducen únicamente los eventos de this que contienen el string s
-  * @return Devuelve true o false indicando si hay o no algún match de la cadena clave s en los eventos de this
+  * @brief Dadas dos fechas históricas une sus eventos sin que haya ninguno repetido
+  * @param f1, f2 fechas histórias cuyos eventos vamos a unir
+  * @param u fecha histórica resultante de la unión de f1 y f2
   */
   void unionEventos(const Fecha_Historica &f1, const Fecha_Historica &f2, Fecha_Historica &u );
+ 
+ 
+ 
+ /**
+    * @brief Dadas dos fechas históricas crea otra con los eventos que están en ambos
+    * @param f  fecha história cuyos eventos vamos a intesectar con los de la fecha que invoca a la función
+    * @param i fecha histórica resultante de la intersección
+    */
 
-  bool buscarEventos(string s, Fecha_Historica &matches);
+  void interseccionEventos(Fecha_Historica f, Fecha_Historica &i);
 
 
-  /**
+  
+ /**
     * @brief Busca un evento dentro de todos los de una fecha histórica.
     * @param event string con el evento a buscar
     * @return Devuelve true o false indicando si está o no repetido
     */
+ 
+  bool buscarEventos(string s, Fecha_Historica &matches);
 
-  /**
-    * @brief Recorre los eventos y si hay uno repetido lo elimina
-    */
 
 /**
   * @brief Salida de un Fecha_Historica a ostream
