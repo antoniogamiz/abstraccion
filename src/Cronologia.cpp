@@ -197,6 +197,16 @@ using namespace std;
      return nuevo;
    }
 
+   //Buscar eventos que sucedieron entre dos años
+   Cronologia Cronologia::buscarEventoEntre(int anio1,int anio2){
+    Cronologia nuevo;
+    for(int i=buscarAnio(anio1);i<buscarAnio(anio2)+1;i++){
+      nuevo.addEvento(event[i]);
+    }
+   
+    return nuevo;
+  }
+
 //Operador <<
   ostream& operator<< (ostream& os, const Cronologia& c){
      for(int i=0; i<c.neventos; i++)

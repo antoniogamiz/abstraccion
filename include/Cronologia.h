@@ -186,6 +186,9 @@ class Cronologia {
 
   Cronologia buscarEventos(string s);
 
+
+  Cronologia buscarEventoEntre(int anio1,int anio2);
+
   /**
   * @brief Busca el año que mayor número de eventos ha tenido
   * @return Año con con mayor número de eventos

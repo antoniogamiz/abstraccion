@@ -12,11 +12,15 @@
 using namespace std;
 
 int main(int argc, char * argv[]){
+/////////////////////////////////////////////////////////////////////////////////////////
 
-  if (argc!=3){
+    //Comprobamos que el número de argumentos se correcto.
+
+    if (argc!=3){
       cout<<"Dime el nombre de dos ficheros que contengan cronologías" <<endl;
       return 0;
    }
+/////////////////////////////////////////////////////////////////////////////////////////
 
   //Leemos la primera cronología.
 
@@ -28,6 +32,9 @@ int main(int argc, char * argv[]){
    Cronologia cron1;
    f >> cron1;
 
+
+/////////////////////////////////////////////////////////////////////////////////////////
+
    //Leemos la segunda cronología.
 
    ifstream ff (argv[2]);
@@ -38,26 +45,40 @@ int main(int argc, char * argv[]){
    Cronologia cron2;
    ff >> cron2;
 
+/////////////////////////////////////////////////////////////////////////////////////////
 
    //Mostramos las cronoogías leídas.
 
    cout << "Primera cronología leida del archivo: " << endl << cron1 << endl;
    cout << "Segunda cronología leida del archivo: " << endl << cron2 << endl;
 
+/////////////////////////////////////////////////////////////////////////////////////////
+
    //Comprobamos el funcionamiento de Fecha_Historica::estaRepetido;
 
-  //  string evento;
-  //  cout << "Introduzca un evento para comprobar si está en alguna de las cronologías:" << endl;
-  //  cin >> evento;
-  //  if(cron1.estaRepetido(evento))
-  //   cout << "Este evento se encuentra en "<< argv[1] << "." << endl;
-  // else
-  //   cout << "Este evento no se encuentra en "<< argv[1] << "." << endl;
-  // if(cron2.estaRepetido(evento))
-  //   cout << "Este evento se encuentra en "<< argv[2] << "." << endl;
-  // else
-  //   cout << "Este evento no se encuentra en "<< argv[2] << "." << endl;
+   string evento;
+   cout << "Introduzca un evento para comprobar si está en alguna de las cronologías:" << endl;
+   getline(cin, evento);
+   if(cron1.estaRepetido(evento))
+    cout << "Este evento se encuentra en "<< argv[1] << "." << endl;
+  else
+    cout << "Este evento no se encuentra en "<< argv[1] << "." << endl;
+  if(cron2.estaRepetido(evento))
+    cout << "Este evento se encuentra en "<< argv[2] << "." << endl;
+  else
+    cout << "Este evento no se encuentra en "<< argv[2] << "." << endl;
 
+/////////////////////////////////////////////////////////////////////////////////////////
+
+   //Probramos la funcion Cronologia::buscarEventoEntre(int anio1, int anio2);
+   
+   cout << "Introduzca dos años entre los que quiere ver los eventos de la cronología 1: " << endl;
+   int anio1=0; int anio2=0;
+   cin >> anio1 >> anio2;
+   Cronologia buscar = cron1.buscarEventoEntre(anio1,anio2);
+   cout << "Los eventos entre los años " << anio1 << " y " << anio2 << " son: " << endl << buscar << endl;
+
+/////////////////////////////////////////////////////////////////////////////////////////
 
   //Unimos las dos cronologías y mostramos por pantalla el resultado.
 
@@ -67,6 +88,7 @@ int main(int argc, char * argv[]){
 
   cout << "Cronología resultante de unir: " << argv[1] << " con " << argv[2] << " :" << endl << u << endl;
 
+/////////////////////////////////////////////////////////////////////////////////////////
 
   //Intersecamos las dos cronologías y mostramos por pantalla el resultado.
 
@@ -74,16 +96,21 @@ int main(int argc, char * argv[]){
 
     //cout << "Cronología resultante de intersecar: " << argv[1] << " con " << argv[2] << " :" << endl << unionInter << endl;
 
-//NO FUNCIONA, DEVUELVE UN VALOR EN HEXADECIMAL
-    cout << "\n Probamos que funciona GetEventos: ";
+/////////////////////////////////////////////////////////////////////////////////////////
+
+    cout << "Probamos que funciona GetEventos: " << endl;
     cout << cron2.getEventos(2018) << endl;
 
+/////////////////////////////////////////////////////////////////////////////////////////
 
-    //cout << "\nEl máximo número de eventos de " << argv[1] << "tuvo lugar en el año: " << cron1.maxNumEvents();
-    //cout << "\nEl máximo número de eventos de " << argv[2] << "tuvo lugar en el año: " << cron2.maxNumEvents();
+   //Probamos las funciones Cronologia::maxNumEvents y Cronologia::minNumEvents.
 
-    //cout << "\nEl mínimo número de eventos de " << argv[1] << " tuvo lugar en el año: " << cron1.minNumEvents();
-    //cout << "\nEl mínimo número de eventos de " << argv[2] << " tuvo lugar en el año: " << cron2.minNumEvents();
+    cout << "El máximo número de eventos de " << argv[1] << "tuvo lugar en el año: " << cron1.maxNumEvents() << endl;
+    cout << "El máximo número de eventos de " << argv[2] << "tuvo lugar en el año: " << cron2.maxNumEvents() << endl;
 
+    cout << "El mínimo número de eventos de " << argv[1] << " tuvo lugar en el año: " << cron1.minNumEvents() << endl;
+    cout << "El mínimo número de eventos de " << argv[2] << " tuvo lugar en el año: " << cron2.minNumEvents() << endl;
+
+/////////////////////////////////////////////////////////////////////////////////////////
 }
 
