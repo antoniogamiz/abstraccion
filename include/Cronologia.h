@@ -186,7 +186,12 @@ class Cronologia {
 
   Cronologia buscarEventos(string s);
 
-
+  /**
+  * @brief Buscador de Fechas_Históricas dados dos años
+  * @param anio1 entero que es el primer año
+  * @param anio2 entero que es el segundo año
+  * @return Devuelve un objeto de Cronología con los eventos que sucedieron entre los dos años
+  */
   Cronologia buscarEventoEntre(int anio1,int anio2);
 
   /**
