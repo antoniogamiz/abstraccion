@@ -36,9 +36,9 @@ using namespace std;
   * Un ejemplo de su uso:
   * @include pruebacronologia.cpp
   *
-  * @author
-  * @author
-  * @date
+  * @author Antonio Gámiz Delgado
+  * @author Elena Merelo Molina
+  * @date 31 de octubre de 2017
   */
 
 class Cronologia {
@@ -123,7 +123,6 @@ class Cronologia {
 /**
   * @brief Añade un Evento Histórico  en la Cronología
   * @param eh el nuevo Evento Historico
-  * @pre la posición
   * @return no devuelve nada
   */
 
@@ -146,6 +145,16 @@ class Cronologia {
   */
 
   void unionCronologias(const Cronologia& c, Cronologia& u);
+ 
+ 
+ /**
+  * @brief Dadas dos cronologías las une en otra que tiene los eventos y años comunes
+  * @param c cronología que se va a unir a la que invoca a la función
+  * @param i cronología resultante de intersectarlas
+  */
+
+  void interseccionCronologias(Cronologia &c, Cronologia &i);
+
 
 
 
@@ -159,7 +168,7 @@ class Cronologia {
 
 
 /**
-  * @brief Busca un Evento Histórico dado su fecha
+  * @brief Busca un Evento Histórico dada su fecha
   * @param f la fecha del evento a buscar
   * @pre la fecha debe ser válida
   * @return Devuelve la posición del evento
