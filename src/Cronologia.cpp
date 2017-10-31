@@ -81,11 +81,15 @@ using namespace std;
   }
 
   //Dado un año devolvemos los eventos que se dieron en él
-    string* Cronologia::getEventos(int a){
+    Fecha_Historica Cronologia::getEventos(int a){
       int posicion_anio = buscarAnio(a);
-
-        return event[posicion_anio].getEventos();
-    }
+      if(posicion_anio != -1)
+        return event[posicion_anio];
+      else{
+        Fecha_Historica vacia;
+        return vacia;
+      }
+      }
 
 
 //Busca un año en la Cronología y devuelve si dicho año está en la cronología o no.

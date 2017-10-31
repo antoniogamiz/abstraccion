@@ -76,7 +76,7 @@ int main(int argc, char * argv[]){
 
 //NO FUNCIONA, DEVUELVE UN VALOR EN HEXADECIMAL
     cout << "\n Probamos que funciona GetEventos: ";
-    cout << cron2.getEventos(2018);
+    cout << cron2.getEventos(2018) << endl;
 
 
     //cout << "\nEl máximo número de eventos de " << argv[1] << "tuvo lugar en el año: " << cron1.maxNumEvents();

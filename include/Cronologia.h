@@ -155,7 +155,7 @@ class Cronologia {
     * @return string* vector de string con los eventos
     */
 
-    string* getEventos(int a);
+    Fecha_Historica getEventos(int a);
 
 
 /**
