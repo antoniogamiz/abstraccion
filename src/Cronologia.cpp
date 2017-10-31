@@ -29,10 +29,8 @@ using namespace std;
   }
 
 
-
-
   Cronologia::Cronologia(Fecha_Historica *eh, int n):reservados(n),neventos(n){
-    Fecha_Historica *event = new Fecha_Historica[n];   
+    Fecha_Historica *event = new Fecha_Historica[n];
     for (int i=0; i<n; i++)
        event[i]=eh[i];
  }
@@ -82,6 +80,13 @@ using namespace std;
     return repetida;
   }
 
+  //Dado un año devolvemos los eventos que se dieron en él
+    string* Cronologia::getEventos(int a){
+      int posicion_anio = buscarAnio(a);
+
+        return event[posicion_anio].getEventos();
+    }
+
 
 //Busca un año en la Cronología y devuelve si dicho año está en la cronología o no.
   int Cronologia::buscarAnio(int f){
@@ -112,7 +117,56 @@ using namespace std;
     return anio_max;
   }
 
-//Devuelve si un año está repetido o no dentro de la Cronología
+  void Cronologia::unionCronologias(const Cronologia& c, Cronologia& u){
+    int i=0, j=0;
+    while(i< neventos && j< c.neventos){
+      if(event[i].getAnio() < c.event[j].getAnio()){
+        u.addEvento(event[i]);
+        i++;
+      }
+
+      if(event[i].getAnio() > c.event[j].getAnio()){
+        u.addEvento(c.event[j]);
+        j++;
+      }
+
+      if(event[i].getAnio() == c.event[j].getAnio()){
+        Fecha_Historica aux;
+
+        aux.setAnio(event[i].getAnio());
+        aux.unionEventos(event[i], c.event[j], aux);
+        u.addEvento(aux);
+        i++;
+        j++;
+      }
+    }
+
+    while(j< c.neventos){
+      u.addEvento(c.event[j]);
+      j++;
+    }
+
+    while(i< neventos){
+      u.addEvento(event[i]);
+      i++;
+    }
+  }
+
+  //Devuelve el año en el que ha habido un menor número de eventos
+    int Cronologia::minNumEvents(){
+      int min= event[0].getNumEventos();
+      int anio_min= event[0].getAnio();
+
+      for(int i=1; i< neventos; i++){
+        if(event[i].getNumEventos() < min){
+          min= event[i].getNumEventos();
+          anio_min= event[i].getAnio();
+        }
+      }
+      return anio_min;
+    }
+
+//Devuelve si un año está o no dentro de la Cronología
   bool Cronologia::estaRepetido(int anio){
     bool repetido= false;
 

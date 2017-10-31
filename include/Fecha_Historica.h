@@ -132,7 +132,25 @@ class Fecha_Historica {
 
   int getAnio ();
 
+
+
+  /**
+    * @brief Método de establecimiento del año de la Fecha_Historica
+    * @param a año de la Fecha_Historica
+    */
+
+
   void setAnio(int a);
+
+
+
+  /**
+    * @brief Devuelve los eventos ocurridos en una fecha histórica
+    * @return string* vector de string con los eventos
+    */
+
+    string* getEventos();
+
 
 
   /**
@@ -162,7 +180,7 @@ class Fecha_Historica {
   bool estaRepetido(string evento);
 
 
-  
+
 
 
 
@@ -209,3 +227,4 @@ class Fecha_Historica {
 };
 
 #endif
+

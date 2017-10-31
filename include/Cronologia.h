@@ -137,7 +137,26 @@ class Cronologia {
   */
 
   bool estaRepetido(string evento);
-  
+
+
+  /**
+  * @brief Dadas dos cronologías las une en otra
+  * @param c cronología que se va a unir a la que invoca a la función
+  * @param u cronología resultante de unirlas
+  */
+
+  void unionCronologias(const Cronologia& c, Cronologia& u);
+
+
+
+  /**
+    * @brief Devuelve los eventos ocurridos en un año
+    * @param a año del que se quieren saber los eventos
+    * @return string* vector de string con los eventos
+    */
+
+    string* getEventos(int a);
+
 
 /**
   * @brief Busca un Evento Histórico dado su fecha
@@ -173,6 +192,15 @@ class Cronologia {
   */
 
   int maxNumEvents();
+
+
+
+  /**
+  * @brief Busca el año que menor número de eventos ha tenido
+  * @return Año con con menor número de eventos
+  */
+
+  int minNumEvents();
 
 
 /**
