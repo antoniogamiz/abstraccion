@@ -28,7 +28,7 @@ using namespace std;
          }
   }
 
-
+//Construye una cronología dadas una fecha y un número
   Cronologia::Cronologia(Fecha_Historica *eh, int n):reservados(n),neventos(n){
     Fecha_Historica *event = new Fecha_Historica[n];
     for (int i=0; i<n; i++)
@@ -44,7 +44,7 @@ using namespace std;
     *this=c;
    }
 
-
+//Operador de asignación
   Cronologia& Cronologia::operator=(const Cronologia& c){
     neventos=c.neventos;
     reservados=c.reservados;
@@ -54,6 +54,7 @@ using namespace std;
     return *this;
   }
 
+//Destructor
   Cronologia::~Cronologia(){
     neventos=0;
     reservados=0;
@@ -73,6 +74,7 @@ using namespace std;
      ordenar();
   }
 
+//Mira si un evento está en la cronología
   bool Cronologia::estaRepetido(string evento){
     bool repetida=false;
     for(int i=0; i<neventos && !repetida; i++)
@@ -121,6 +123,7 @@ using namespace std;
     return anio_max;
   }
 
+//Devuelve la unión ordenada de dos cronologías, sin elementos repetidos
   void Cronologia::unionCronologias(const Cronologia& c, Cronologia& u){
     int i=0, j=0;
     while(i< neventos && j< c.neventos){
@@ -156,6 +159,30 @@ using namespace std;
     }
   }
 
+//Dadas dos cronologías crea una con los elementos (años y dentro de estos los eventos) que están en ambas
+  void Cronologia::interseccionCronologias(Cronologia &c, Cronologia &i){
+      int k= 0, j= 0;
+
+      ordenar();
+      c.ordenar();
+
+      while(k< neventos && j< c.neventos){
+        if(event[k].getAnio() == c.event[j].getAnio()){
+          Fecha_Historica aux;
+          event[k].interseccionEventos(c.event[j], aux);
+          aux.setAnio(event[k].getAnio());
+          i.addEvento(aux);
+          k++;
+          j++;
+        }
+        else if(event[k].getAnio() < c.event[j].getAnio())
+          k++;
+
+        else
+          j++;
+      }
+    }
+
   //Devuelve el año en el que ha habido un menor número de eventos
     int Cronologia::minNumEvents(){
       int min= event[0].getNumEventos();
@@ -182,8 +209,6 @@ using namespace std;
     return repetido;
   }
 
-
-
 //Busca un evento en la Cronología y devuelve su posición en el vector
   Cronologia Cronologia::buscarEventos(string s){
      Cronologia nuevo;
@@ -197,7 +222,7 @@ using namespace std;
      return nuevo;
    }
 
-   //Buscar eventos que sucedieron entre dos años
+ //Buscar eventos que sucedieron entre dos años
    Cronologia Cronologia::buscarEventoEntre(int anio1,int anio2){
     Cronologia nuevo;
     for(int i=buscarAnio(anio1);i<buscarAnio(anio2)+1;i++){
