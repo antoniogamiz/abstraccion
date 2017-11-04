@@ -76,6 +76,10 @@ class Cronologia {
 
   void resize(int r);         /**< Función privada para mantener el vector dinámico de string */
   void ordenar();             /**< Función privada para ordener los eventos según la fecha */
+  void liberarMemoria();      /**< Función privada para liberar memoria dinámica */
+  void reservarMemoria(int numero);   /**< Función privada para reservar memoria dinámica */
+/**< Función privada para que dados un vector de fechas históricas, un número de eventos y reservados cree una cronología a partir de ellos */
+  void copiar(Fecha_Historica *f, int reserv, int eventos);
 
 
  public:
@@ -145,8 +149,8 @@ class Cronologia {
   */
 
   void unionCronologias(const Cronologia& c, Cronologia& u);
- 
- 
+
+
  /**
   * @brief Dadas dos cronologías las une en otra que tiene los eventos y años comunes
   * @param c cronología que se va a unir a la que invoca a la función
