@@ -28,11 +28,31 @@ using namespace std;
          }
   }
 
+  void Cronologia::liberarMemoria(){
+    neventos=reservados=0;
+    delete [] event;
+  }
+
+  void Cronologia::reservarMemoria(int numero){
+    if(numero>0){
+      reservados=numero;
+      Fecha_Historica *event = new Fecha_Historica [numero];
+    }
+    else
+      reservados=0;
+  }
+
+  void Cronologia::copiar(Fecha_Historica *f, int reserv, int eventos){
+    liberarMemoria();
+    reservarMemoria(reserv);
+    neventos=eventos;
+    for(int i= 0; i< eventos; i++)
+      event[i]=f[i];
+  }
+
 //Construye una cronología dadas una fecha y un número
-  Cronologia::Cronologia(Fecha_Historica *eh, int n):reservados(n),neventos(n){
-    Fecha_Historica *event = new Fecha_Historica[n];
-    for (int i=0; i<n; i++)
-       event[i]=eh[i];
+  Cronologia::Cronologia(Fecha_Historica *eh, int n){
+    copiar(eh, n, n);
  }
 
 //Constructor vacío
@@ -46,19 +66,15 @@ using namespace std;
 
 //Operador de asignación
   Cronologia& Cronologia::operator=(const Cronologia& c){
-    neventos=c.neventos;
-    reservados=c.reservados;
-    event = new Fecha_Historica[reservados];
-    for(int i=0; i<neventos; i++)
-      event[i]=c.event[i];
+    if(this != &c)
+      copiar(c.event, c.reservados, c.neventos);
+
     return *this;
   }
 
 //Destructor
   Cronologia::~Cronologia(){
-    neventos=0;
-    reservados=0;
-    delete[] event;
+    liberarMemoria();
   }
 
 //Añade objeto de Fecha_Historica
@@ -228,7 +244,7 @@ using namespace std;
     for(int i=buscarAnio(anio1);i<buscarAnio(anio2)+1;i++){
       nuevo.addEvento(event[i]);
     }
-   
+
     return nuevo;
   }
 
