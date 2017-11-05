@@ -74,7 +74,11 @@ class Fecha_Historica {
 
   string *str;        /**< vector de string de Eventos Historicos */
 
-  void resize(int r); /**< Funcion privada para mantener el vector dinámico de string */
+  void resize(int r);    /**< Función privada para mantener el vector dinámico de string */
+  void liberarMemoria();     /**< Función privada para liberar memoria dinámica */
+  void reservarMemoria(int n);    /**< Función privada para reservar memoria dinámica */
+  /**< Dados un vector de string, un número de reservados y de eventos crea una fecha histórica a partir de ellos */
+  void copiar(string *s, int reserv, int num_events);
 
 
 
@@ -187,9 +191,9 @@ class Fecha_Historica {
   * @param u fecha histórica resultante de la unión de f1 y f2
   */
   void unionEventos(const Fecha_Historica &f1, const Fecha_Historica &f2, Fecha_Historica &u );
- 
- 
- 
+
+
+
  /**
     * @brief Dadas dos fechas históricas crea otra con los eventos que están en ambos
     * @param f  fecha história cuyos eventos vamos a intesectar con los de la fecha que invoca a la función
@@ -199,13 +203,13 @@ class Fecha_Historica {
   void interseccionEventos(Fecha_Historica f, Fecha_Historica &i);
 
 
-  
+
  /**
     * @brief Busca un evento dentro de todos los de una fecha histórica.
     * @param event string con el evento a buscar
     * @return Devuelve true o false indicando si está o no repetido
     */
- 
+
   bool buscarEventos(string s, Fecha_Historica &matches);
 
 
@@ -231,4 +235,3 @@ class Fecha_Historica {
 };
 
 #endif
-
