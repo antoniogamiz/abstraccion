@@ -16,6 +16,30 @@ using namespace std;
      reservados = r;
   }
 
+  void Fecha_Historica::liberarMemoria(){
+    anio=numeventos=reservados=0;
+    delete[] str;
+  }
+
+  void Fecha_Historica::reservarMemoria(int n){
+    if(n<0)
+      reservados=0;
+    else
+      reservados=n;
+
+    str= new string [reservados];
+  }
+
+  void Fecha_Historica::copiar(string *s, int num_events, int _reservados){
+    assert(num_events<=_reservados);
+    numeventos=num_events;
+
+    reservarMemoria(_reservados);
+
+    for(int i= 0; i<numeventos; i++)
+      str[i]= s[i];
+  }
+
 //Constructor vacío
   Fecha_Historica::Fecha_Historica():anio(0),reservados(0),numeventos(0),str(0){}
 
@@ -23,10 +47,9 @@ using namespace std;
 //Constructor con parametros año, cadena de eventos y número de eventos a añadir
   Fecha_Historica::Fecha_Historica(int a, string *s, int n){
      assert(a >= 0 && a<= 9999);
+     liberarMemoria();
      anio = a;
-     string *str = new string[n];
-     for (int i=0; i<n; i++)
-        str[i]=s[i];
+     copiar(s, n, n);
   }
 
 //Constructor de copia
@@ -36,22 +59,16 @@ using namespace std;
 
 //Operador de asignación
    Fecha_Historica& Fecha_Historica::operator=(const Fecha_Historica &e){
-      if(this != &e)
-      str = new string[e.reservados];
-      anio=e.anio;
-      numeventos = e.numeventos;
-      reservados = e.numeventos;
-      for(int i=0; i<numeventos; ++i)
-        str[i] = e.str[i];
+      if(this != &e){
+        anio=e.anio;
+        copiar(e.str, e.numeventos, e.reservados);
+      }
        return *this;
    }
 
 //Destructor
    Fecha_Historica::~Fecha_Historica(){
-    anio=0;
-    numeventos=0;
-    reservados=0;
-    delete[] str;
+    liberarMemoria();
    }
 
 //Método de acceso a año
