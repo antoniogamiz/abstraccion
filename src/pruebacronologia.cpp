@@ -14,15 +14,15 @@ using namespace std;
 int main(int argc, char * argv[]){
 /////////////////////////////////////////////////////////////////////////////////////////
 
-    //Comprobamos que el número de argumentos se correcto.
+//Comprobamos que el número de argumentos se correcto.
+  if (argc!=3){
+    cout<<"Dime el nombre de dos ficheros que contengan cronologías" <<endl;
+    return 0;
+  }
 
-    if (argc!=3){
-      cout<<"Dime el nombre de dos ficheros que contengan cronologías" <<endl;
-      return 0;
-   }
 /////////////////////////////////////////////////////////////////////////////////////////
 
-  //Leemos la primera cronología.
+//Leemos la primera cronología.
 
   ifstream f (argv[1]);
    if (!f){
@@ -32,18 +32,18 @@ int main(int argc, char * argv[]){
    Cronologia cron1;
    f >> cron1;
 
-
 /////////////////////////////////////////////////////////////////////////////////////////
 
-   //Leemos la segunda cronología.
+//Leemos la segunda cronología.
 
-   ifstream ff (argv[2]);
-   if (!ff){
+  ifstream ff (argv[2]);
+  if (!ff){
     cout<<"No puedo abrir el fichero "<<argv[2]<<endl;
     return 0;
-   }
-   Cronologia cron2;
-   ff >> cron2;
+  }
+
+  Cronologia cron2;
+  ff >> cron2;
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
@@ -71,7 +71,7 @@ int main(int argc, char * argv[]){
 /////////////////////////////////////////////////////////////////////////////////////////
 
    //Probamos la funcion Cronologia::buscarEventoEntre(int anio1, int anio2);
-   
+
    cout << "Introduzca dos años entre los que quiere ver los eventos de la cronología 1: " << endl;
    int anio1=0; int anio2=0;
    cin >> anio1 >> anio2;
@@ -93,29 +93,34 @@ int main(int argc, char * argv[]){
   //Intersectamos las dos cronologías y mostramos por pantalla el resultado.
 
   Cronologia interHard;
-  cron1.interseccionCronologiasHard(cron2, interHard); 
-  
-  cout << "Cronología resultante de intersectar: " << argv[1] << " con " << argv[2] << " :" << endl << interHard << endl;
+  cron1.interseccionCronologiasHard(cron2, interHard);
 
-  // Cronologia interSoft;
-  // cron1.interseccionCronologiasSoft(cron2, interSoft); 
-  
-  // cout << "Cronología resultante de intersectar: " << argv[1] << " con " << argv[2] << " :" << endl << interSoft << endl;
+  cout << "Cronología resultante de intersectar totalmente: " << argv[1] << " con " << argv[2] << " :" << endl << interHard << endl;
+
+  Cronologia interSoft;
+  cron1.interseccionCronologiasSoft(cron2, interSoft);
+
+  cout << "Cronología resultante de intersectar: " << argv[1] << " con " << argv[2] << " :" << endl << interSoft << endl;
 /////////////////////////////////////////////////////////////////////////////////////////
+//Probamos que funciona getEventos()
+  int a;
+  cout << "Introduzca un año de la cronología del que quiera saber los eventos: " << endl;
+  cin >> a;
+  if(cron1.estaRepetido(a))
+    cout << "Eventos de la cronología 1 ocurridos en ese año: " << cron1.getEventos(a);
 
-    cout << "Probamos que funciona getEventos: " << endl;
-    cout << cron2.getEventos(1900) << endl;
+  if(cron2.estaRepetido(a))
+    cout << "Eventos de la cronología 2 ocurridos en ese año: " << cron2.getEventos(a);
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
    //Probamos las funciones Cronologia::maxNumEvents y Cronologia::minNumEvents.
 
-    cout << "El máximo número de eventos de " << argv[1] << "tuvo lugar en el año: " << cron1.maxNumEvents() << endl;
-    cout << "El máximo número de eventos de " << argv[2] << "tuvo lugar en el año: " << cron2.maxNumEvents() << endl;
+  cout << "El máximo número de eventos de " << argv[1] << "tuvo lugar en el año: " << cron1.maxNumEvents() << endl;
+  cout << "El máximo número de eventos de " << argv[2] << "tuvo lugar en el año: " << cron2.maxNumEvents() << endl;
 
-    cout << "El mínimo número de eventos de " << argv[1] << " tuvo lugar en el año: " << cron1.minNumEvents() << endl;
-    cout << "El mínimo número de eventos de " << argv[2] << " tuvo lugar en el año: " << cron2.minNumEvents() << endl;
+  cout << "El mínimo número de eventos de " << argv[1] << " tuvo lugar en el año: " << cron1.minNumEvents() << endl;
+  cout << "El mínimo número de eventos de " << argv[2] << " tuvo lugar en el año: " << cron2.minNumEvents() << endl;
 
 /////////////////////////////////////////////////////////////////////////////////////////
 }
-
