@@ -5,7 +5,7 @@
 
 using namespace std;
 
-//Resize simple
+//Redimensiona el vector de string al tamaño pasado como parámetro
   void Fecha_Historica::resize(int r){
      string *aux = new string[r];
      for(int i=0; i<numeventos; ++i){
@@ -33,7 +33,6 @@ using namespace std;
   void Fecha_Historica::copiar(string *s, int num_events, int _reservados){
     assert(num_events<=_reservados);
     numeventos=num_events;
-
     reservarMemoria(_reservados);
 
     for(int i= 0; i<numeventos; i++)
@@ -76,7 +75,7 @@ using namespace std;
     return anio;
    }
 
-//Establecemos año como un valor pasado como parámetro
+//Inicializamos anio al valor pasado como parámetro
    void Fecha_Historica::setAnio(int a){
     assert(a>=0 && a<= 9999);
      anio=a;
@@ -86,7 +85,6 @@ using namespace std;
   int Fecha_Historica::getNumEventos(){
     return numeventos;
   }
-
 
 //Añade un evento
   void Fecha_Historica::addEvento(string &event){
