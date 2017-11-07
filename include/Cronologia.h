@@ -152,14 +152,21 @@ class Cronologia {
 
 
  /**
-  * @brief Dadas dos cronologías las une en otra que tiene los eventos y años comunes
-  * @param c cronología que se va a unir a la que invoca a la función
+  * @brief Interseca las Fechas_Historicas de la cronología c con la invocante(se entienden como Fechas_Historicas iguales las que tienen el mismo año). Además también se interecan los eventos.
+  * @param c cronología que se va a intersecar con la invocante.
   * @param i cronología resultante de intersectarlas
   */
 
-  void interseccionCronologias(Cronologia &c, Cronologia &i);
+  void interseccionCronologiasHard(Cronologia &c, Cronologia &i);
 
+ /**
+  * @brief Interseca las Fechas_Historicas de la cronología c con la invocante(se entienden como Fechas_Historicas iguales las que tienen el mismo año).
+  * @param c cronología que se va a intersecar con la que invocante a la función
+  * @param i cronología resultante de intersectarlas
+  */
 
+  void interseccionCronologiasSoft(Cronologia &c, Cronologia &i);
+  
 
 
   /**

@@ -92,15 +92,19 @@ int main(int argc, char * argv[]){
 
   //Intersectamos las dos cronologías y mostramos por pantalla el resultado.
 
-  Cronologia inter;
-  cron1.interseccionCronologias(cron2, inter); 
+  Cronologia interHard;
+  cron1.interseccionCronologiasHard(cron2, interHard); 
   
-  cout << "Cronología resultante de intersectar: " << argv[1] << " con " << argv[2] << " :" << endl << inter << endl;
+  cout << "Cronología resultante de intersectar: " << argv[1] << " con " << argv[2] << " :" << endl << interHard << endl;
 
+  // Cronologia interSoft;
+  // cron1.interseccionCronologiasSoft(cron2, interSoft); 
+  
+  // cout << "Cronología resultante de intersectar: " << argv[1] << " con " << argv[2] << " :" << endl << interSoft << endl;
 /////////////////////////////////////////////////////////////////////////////////////////
 
     cout << "Probamos que funciona getEventos: " << endl;
-    cout << cron2.getEventos(2018) << endl;
+    cout << cron2.getEventos(1900) << endl;
 
 /////////////////////////////////////////////////////////////////////////////////////////
 

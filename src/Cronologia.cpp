@@ -176,7 +176,7 @@ using namespace std;
   }
 
 //Dadas dos cronologías crea una con los elementos (años y dentro de estos los eventos) que están en ambas
-  void Cronologia::interseccionCronologias(Cronologia &c, Cronologia &i){
+  void Cronologia::interseccionCronologiasHard(Cronologia &c, Cronologia &i){
       int k= 0, j= 0;
 
       ordenar();
@@ -187,7 +187,8 @@ using namespace std;
           Fecha_Historica aux;
           event[k].interseccionEventos(c.event[j], aux);
           aux.setAnio(event[k].getAnio());
-          i.addEvento(aux);
+          if(aux.getEventos())
+            i.addEvento(aux);
           k++;
           j++;
         }
@@ -198,6 +199,31 @@ using namespace std;
           j++;
       }
     }
+
+//Dadas dos cronologías crea una con los elementos (años y dentro de estos los eventos) que están en ambas
+  void Cronologia::interseccionCronologiasSoft(Cronologia &c, Cronologia &i){
+    int k= 0, j= 0;
+
+    ordenar();
+    c.ordenar();
+
+    while(k< neventos && j< c.neventos){
+      if(event[k].getAnio() == c.event[j].getAnio()){
+        Fecha_Historica aux;
+        aux.unionEventos(event[k], c.event[j], aux);
+        aux.setAnio(event[k].getAnio());
+        i.addEvento(aux);
+        k++;
+        j++;
+      }
+      else if(event[k].getAnio() < c.event[j].getAnio())
+        k++;
+
+      else
+        j++;
+    }
+  }
+
 
   //Devuelve el año en el que ha habido un menor número de eventos
     int Cronologia::minNumEvents(){
