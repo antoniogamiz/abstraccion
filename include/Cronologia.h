@@ -85,7 +85,7 @@ class Cronologia {
  public:
 
 /**
-  * @brief Constructor por defecto de la clase. Lo creamos sencillamente para evitar
+  * @brief Constructor por defecto de la clase. Lo creamos para evitar
   * errores o asignaciones de basura a objetos de nuestra clase. Crea una Cronologia
   * por defecto con año 0, con el vector nulo y 0 anios y reservados
   */
@@ -127,7 +127,6 @@ class Cronologia {
 /**
   * @brief Añade un Evento Histórico  en la Cronología
   * @param eh el nuevo Evento Historico
-  * @return no devuelve nada
   */
 
   void addEvento(Fecha_Historica& eh);
@@ -152,21 +151,21 @@ class Cronologia {
 
 
  /**
-  * @brief Interseca las Fechas_Historicas de la cronología c con la invocante(se entienden como Fechas_Historicas iguales las que tienen el mismo año). Además también se interecan los eventos.
-  * @param c cronología que se va a intersecar con la invocante.
+  * @brief Intersecta las Fechas_Historicas de la cronología c con la invocante(se entienden como Fechas_Historicas iguales las que tienen el mismo año). Además también se intersectan los eventos.
+  * @param c cronología que se va a intersectar con la invocante.
   * @param i cronología resultante de intersectarlas
   */
 
   void interseccionCronologiasHard(Cronologia &c, Cronologia &i);
 
  /**
-  * @brief Interseca las Fechas_Historicas de la cronología c con la invocante(se entienden como Fechas_Historicas iguales las que tienen el mismo año).
-  * @param c cronología que se va a intersecar con la que invocante a la función
+  * @brief Intersecta las Fechas_Historicas de la cronología c con la invocante(se entienden como Fechas_Historicas iguales las que tienen el mismo año).
+  * @param c cronología que se va a intersectar con la que invocante a la función
   * @param i cronología resultante de intersectarlas
   */
 
   void interseccionCronologiasSoft(Cronologia &c, Cronologia &i);
-  
+
 
 
   /**
