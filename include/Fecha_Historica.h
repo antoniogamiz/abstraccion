@@ -85,7 +85,7 @@ class Fecha_Historica {
  public:
 
 /**
-  * @brief Constructor por defecto de la clase. Lo creamos sencillamente para evitar
+  * @brief Constructor por defecto de la clase. Lo creamos para evitar
   * errores o asignaciones de basura a objetos de nuestra clase. Crea una Fecha Historica
   * por defecto con año 0, con el vector nulo y 0 numeventos y reservados
   */
