@@ -4,7 +4,6 @@
 
 using namespace std;
 
-//Resize
   void Cronologia::resize(int r){
      if(r>reservados){
      Fecha_Historica *aux = new Fecha_Historica[r];
@@ -16,7 +15,6 @@ using namespace std;
      }
   }
 
-//Ordena
   void Cronologia::ordenar(){
      for (int i=neventos-1; i>0; --i)
       for (int j=0; j<i; ++j)
@@ -175,7 +173,7 @@ using namespace std;
     }
   }
 
-//Dadas dos cronologías crea una con los elementos (años y dentro de estos los eventos) que están en ambas
+//Dadas dos cronologías crea una con los elementos (años y dentro de éstos los eventos) que están en ambas
   void Cronologia::interseccionCronologiasHard(Cronologia &c, Cronologia &i){
       int k= 0, j= 0;
 
@@ -200,7 +198,7 @@ using namespace std;
       }
     }
 
-//Dadas dos cronologías crea una con los elementos (años y dentro de estos los eventos) que están en ambas
+//Dadas dos cronologías crea una con los años que están en ambas y sus respectivos eventos
   void Cronologia::interseccionCronologiasSoft(Cronologia &c, Cronologia &i){
     int k= 0, j= 0;
 
@@ -223,7 +221,6 @@ using namespace std;
         j++;
     }
   }
-
 
   //Devuelve el año en el que ha habido un menor número de eventos
     int Cronologia::minNumEvents(){
